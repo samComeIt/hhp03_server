@@ -1,0 +1,15 @@
+title 잔액 충전 API
+
+Actor->PATCH /api/point/{user_id}:사용자 잔액 충전 요청
+PATCH /api/point/{user_id}->User:사용자 현재 잔액 조회 요청
+
+
+alt case 잔액 데이터X
+User<->User:0
+else case 잔액 데이터 존재
+User<->User: 현재 잔액 반환
+end
+
+User<->User: 잔액 충전 처리
+
+User-->Actor: 업데이트된 잔액 반환

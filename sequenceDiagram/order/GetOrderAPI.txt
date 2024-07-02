@@ -1,0 +1,17 @@
+title 주문 조회 API
+
+Actor->GET /api/order/{order_id}: 주문 조회
+GET /api/order/{order_id}->Order: 주문 조회 요청
+
+Order<->User: 회원의 주문 확인
+alt case 회원의 주문X:
+User-->Actor:끝
+else case 주문 정보 존재:
+alt case 주문 정보 존재:
+Order-->Order:주문 정보 반환
+else case 주문 정보 존재X:
+Order-->Order: []
+end
+end
+
+Order-->Actor: 주문 정보 반환
