@@ -1,8 +1,13 @@
 package hh.plus.server.controller.product.dto;
 
-public record ProductOrderResponseDto(){
-    public static ProductOrderResponseDto response()
-    {
-        return new ProductOrderResponseDto();
-    }
+import java.util.HashMap;
+import java.util.List;
+
+public record ProductOrderResponseDto(
+        List<Long> productIds
+) {
+        public static ProductOrderResponseDto response(List<Long> productIds)
+        {
+            return new ProductOrderResponseDto(productIds);
+        }
 }

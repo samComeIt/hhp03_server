@@ -1,10 +1,14 @@
 package hh.plus.server.controller.order.dto;
 
+import java.util.List;
+
 public record OrderCreateResponseDto(
-        OrderCreateRequestDto orderCreateRequestDto
+        Long orderId,
+        List<Long> orderDetailId
+
 ) {
-    public static Long response(OrderCreateRequestDto orderCreateRequestDto)
+    public static OrderCreateResponseDto response(Long orderId,  List<Long> orderDetailId)
     {
-        return 100L;
+        return new OrderCreateResponseDto(orderId, orderDetailId);
     }
 }

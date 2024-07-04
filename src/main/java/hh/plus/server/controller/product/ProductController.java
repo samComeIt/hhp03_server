@@ -6,6 +6,8 @@ import hh.plus.server.controller.product.dto.ProductResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -17,7 +19,9 @@ public class ProductController {
      * @return
      */
     @GetMapping("/product/{productId}")
-    public ProductResponseDto getProduct(@PathVariable long productId){ return ProductResponseDto.response(productId);}
+    public ProductResponseDto getProduct(@PathVariable long productId){
+        return ProductResponseDto.response(productId, "상품01", Arrays.asList(100L, 200L, 300L));
+    }
 
     /**
      * 상품 상세 조회
@@ -27,7 +31,7 @@ public class ProductController {
      */
     @GetMapping("/product/{productId}/detail/{productOptionId}")
     public ProductDetailResponseDto getProductOption(@PathVariable long productId, @PathVariable long productOptionId){
-        return ProductDetailResponseDto.response(productId, productOptionId);
+        return ProductDetailResponseDto.response(productId, "상품01", Arrays.asList(productOptionId));
     }
 
     /**
@@ -36,6 +40,6 @@ public class ProductController {
      */
     @GetMapping("/products")
     public ProductOrderResponseDto getProductList(){
-        return ProductOrderResponseDto.response();
+        return ProductOrderResponseDto.response(Arrays.asList(100L, 200L, 300L));
     }
 }

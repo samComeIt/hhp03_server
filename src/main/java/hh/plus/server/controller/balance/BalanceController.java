@@ -1,6 +1,6 @@
-package hh.plus.server.controller.user;
+package hh.plus.server.controller.balance;
 
-import hh.plus.server.controller.user.dto.BalanceResponseDto;
+import hh.plus.server.controller.balance.dto.BalanceResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
