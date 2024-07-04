@@ -20,7 +20,7 @@ Task 5 시나리오 분석 및 작업 계획
 Taks 6 시나리오 설계 자료 제출
 
 이커머스 ERD
-![erd.png](erd.png)
+![ERD.png](ERD.png)
 
 API 명세
 ![API_Spec.png](API_Spec.png)
