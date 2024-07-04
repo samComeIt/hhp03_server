@@ -24,13 +24,13 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserControllerTest {
+public class BalanceControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Mock
-    private UserService userService;
+    private BalanceService balanceService;
 
     @BeforeEach
     public void setUp() {
@@ -41,41 +41,41 @@ public class UserControllerTest {
     @DisplayName("유저 잔액 조회 실패 케이스")
     void testGetUserCurPointFail() throws Exception {
         // given
-        Long userId = 100L;
+        Long balanceId = 100L;
         Long point = 0L;
-        User user = new User(userId, point);
+        Balance balance = new Balance(balanceId, point);
 
         // when
-        when(userService.getUserById(userId)).thenReturn(user);
+        when(balanceService.getBalanceById(balanceId)).thenReturn(balance);
 
         // Performing GET request to "/api/point/{userId}"
         // then
-        mockMvc.perform(get("/api/point/{userId}", userId))
+        mockMvc.perform(get("/api/balance/{balanceId}", balanceId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
-    public class User {
-        private Long userId;
-        private Long point;
+    public class Balance {
+        private Long balanceId;
+        private Long balance;
 
-        User(Long userId, Long point)
+        Balance(Long balanceId, Long balance)
         {
-            this.userId = userId;
-            this.point = point;
+            this.balanceId = balanceId;
+            this.balance = balance;
         }
     }
 
-    public interface UserService {
-        User getUserById(Long userId);
+    public interface BalanceService {
+        Balance getBalanceById(Long balanceId);
     }
 
-    public class MockUserService implements UserService {
-        private Map<Long, User> users = new HashMap<>();
+    public class MockUserService implements BalanceService {
+        private Map<Long, Balance> balance = new HashMap<>();
         @Override
-        public User getUserById(Long userId)
+        public Balance getBalanceById(Long userId)
         {
-            return users.get(userId);
+            return balance.get(userId);
         }
     }
 }
