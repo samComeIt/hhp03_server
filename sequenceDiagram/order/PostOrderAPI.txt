@@ -2,12 +2,15 @@ title 주문 결제 API
 
 Actor->POST /api/order: 주문 요청
 POST /api/order->Order: 주문정보 요청
-Order<->User: 현재 잔액 존재 확인
+
+Order->Order: 주문 생성
+
+Order<->Balance: 현재 잔액 존재 확인
 
 alt case 잔액 존재X
-User-->Actor:끝
+Balance-->Actor:끝
 else case 잔액 부족
-User-->Actor:끝
+Balance-->Actor:끝
 else case 잔액 충분
 
 Order<->Product:제품정보 요청
@@ -17,10 +20,16 @@ else case 제품정보 수량X
 Product-->Actor:끝
 end
 
+Order<->Product:재고 수량 확인
+
+opt case 재고 부족
+Product-->Actor: 끝
+end
+
+Product->Product: 재고 수량 차감
 Product->Product: 총 구매량 업데이트
-Order->Order: 주문 생성
-Order->Order: 현재 유저 잔액 업데이트
+Order->Order: 주문 상태 업데이트
+Order->Order: 현재 잔액 업데이트
 
 Order-->Actor: 주문 정보 반환
 end
-

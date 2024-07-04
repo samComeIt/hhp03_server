@@ -1,18 +1,7 @@
 title 상위 상품 목록 API
 
-Actor->GET /api/products?type={type}: 상품 목록 조회 조회
-GET /api/products?type={type}->Product: 상품 목록 조회 요청
-
-alt case {type}: desc (최신순)
-Product->DB:select * from product where is_delete ='N' order by product_id DESC;
-else case {type}: desc (인기순)
-Product->DB:select * from product where is_delete ='N' order by total_order DESC;
-end
-
-alt case 상품 목록 존재
-DB-->Product:상품 목록 정보 반환
-else case 상품 목록 존재X
-DB-->Product:[]
-end
+Actor->GET /api/products: 상품 목록 조회 조회
+GET /api/products->Order Detail: 주문 많은 상품아이디 조회 요청
+Order Detail->Product: 상품 정보 조회
 
 Product-->Actor: 상품 목록 정보 반환
