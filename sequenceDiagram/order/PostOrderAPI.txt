@@ -1,7 +1,7 @@
 title 주문 결제 API
 
-Actor->POST /api/order: 주문 요청
-POST /api/order->Order: 주문정보 요청
+Actor->POST /api/order/create: 주문 요청
+POST /api/order/create->Order: 주문정보 요청
 
 Order->Order: 주문 생성
 
