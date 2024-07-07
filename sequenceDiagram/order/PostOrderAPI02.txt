@@ -1,0 +1,21 @@
+title 주문 API
+
+Actor->POST /api/order/create: 주문 요청
+POST /api/order/create->Order: 주문정보 요청
+
+Order->Order: 주문 생성
+
+
+
+Order<->Product:재고 수량 확인
+
+opt case 재고 부족
+Product-->Actor: 끝
+end
+
+Product->Product: 재고 수량 차감
+Product->Product: 총 구매량 업데이트
+
+
+Product-->Actor: 주문 정보 반환
+end
