@@ -1,4 +1,4 @@
-package hh.plus.server.controller.balance.dto;
+package hh.plus.server.balance.controller.dto;
 
 public record BalanceResponseDto(
         Long balanceId,
