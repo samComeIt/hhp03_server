@@ -1,10 +1,12 @@
 package hh.plus.server.product.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import hh.plus.server.product.domain.Status;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -34,7 +36,8 @@ public class Product {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProductOption> productOption;
+    @JsonManagedReference
+    private List<ProductOption> productOption = new ArrayList<>();
 
     public Product(Long productId, String name, String status, Long orderCnt, Boolean isDeleted, LocalDateTime createdAt, List<ProductOption> productOption) {
         this.productId = productId;

@@ -1,5 +1,6 @@
 package hh.plus.server.product.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
@@ -22,7 +23,8 @@ public class ProductOption {
     private Long productOptionId;
 
     @ManyToOne(fetch =  FetchType.LAZY)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false)
+    @JsonBackReference
     private Product product;
 
     private String name;
