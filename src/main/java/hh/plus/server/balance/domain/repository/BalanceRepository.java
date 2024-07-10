@@ -1,4 +1,4 @@
-package hh.plus.server.balance.service;
+package hh.plus.server.balance.domain.repository;
 
 import hh.plus.server.balance.domain.entity.Balance;
 

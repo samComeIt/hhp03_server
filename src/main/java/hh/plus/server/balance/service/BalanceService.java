@@ -1,14 +1,13 @@
 package hh.plus.server.balance.service;
 
-import hh.plus.server.balance.controller.dto.BalanceDto;
 import hh.plus.server.balance.controller.dto.BalanceResponseDto;
 import hh.plus.server.balance.domain.entity.Balance;
+import hh.plus.server.balance.domain.repository.BalanceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
