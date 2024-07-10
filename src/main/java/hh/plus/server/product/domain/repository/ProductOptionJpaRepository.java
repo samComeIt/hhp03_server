@@ -1,4 +1,4 @@
-package hh.plus.server.product.infrastructure;
+package hh.plus.server.product.domain.repository;
 
 import hh.plus.server.product.domain.entity.ProductOption;
 import org.springframework.data.jpa.repository.JpaRepository;

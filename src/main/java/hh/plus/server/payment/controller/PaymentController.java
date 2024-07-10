@@ -19,7 +19,7 @@ public class PaymentController {
             @ApiResponse(responseCode = "404", description = "Not found - The product does not exist"),
     })
     @PostMapping("/{order_id}")
-    public PaymentDto getProduct(@PathVariable long order_id, PaymentRequestDto paymentRequestDto){
+    public PaymentDto addPayment(@PathVariable long order_id, PaymentRequestDto paymentRequestDto){
         PaymentDto paymentDto = new PaymentDto();
         paymentDto.setOrderId(order_id);
         return paymentDto;
@@ -30,10 +30,10 @@ public class PaymentController {
             @ApiResponse(responseCode = "200", description = "Successfully updated"),
             @ApiResponse(responseCode = "404", description = "Not found - The payment does not exist"),
     })
-    @PatchMapping("/{order_id}/{status}")
-    public PaymentDto getProduct(@PathVariable long order_id, @PathVariable String status){
+    @PatchMapping("/{payment_id}")
+    public PaymentDto updatePayment(@PathVariable long payment_id, @RequestBody String status){
         PaymentDto paymentDto = new PaymentDto();
-        paymentDto.setOrderId(order_id);
+        paymentDto.setPaymentId(payment_id);
         paymentDto.setStatus(status);
         return paymentDto;
     }
