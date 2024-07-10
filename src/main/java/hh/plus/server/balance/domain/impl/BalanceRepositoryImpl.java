@@ -1,6 +1,7 @@
-package hh.plus.server.balance.infrastructure;
+package hh.plus.server.balance.domain.impl;
 
 import hh.plus.server.balance.domain.entity.Balance;
+import hh.plus.server.balance.domain.repository.BalanceJpaRepository;
 import hh.plus.server.balance.service.BalanceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package hh.plus.server.balance.infrastructure;
+package hh.plus.server.balance.domain.repository;
 
 import hh.plus.server.balance.domain.entity.Balance;
 import org.springframework.data.jpa.repository.JpaRepository;
