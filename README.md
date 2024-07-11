@@ -13,7 +13,8 @@ Task 5 시나리오 분석 및 작업 계획
 - [상품 상세 조회](sequenceDiagram/product/GetProductDetailAPI.png)
 - [상위 상품 목록 조회](sequenceDiagram/product/GetProductListAPI.png)
 - [주문 조회](sequenceDiagram/order/GetOrderAPI.png)
-- [주문 결제](sequenceDiagram/order/PostOrderAPI.png)
+- [주문 생성](sequenceDiagram/order/PostOrderAPI02.png)
+- [결제 생성](sequenceDiagram/payment/PostPaymentAPI.png)
 - [잔액 조회](sequenceDiagram/balance/GetBalanceAPI.png)
 - [잔액 충전](sequenceDiagram/balance/PatchPointAPI.png)
 
