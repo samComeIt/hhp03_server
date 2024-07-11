@@ -1,11 +1,14 @@
 package hh.plus.server.order.domain.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import hh.plus.server.payment.domain.entity.Payment;
+import hh.plus.server.product.domain.entity.ProductOption;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,12 +23,17 @@ public class Order {
 
     private String status;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<OrderDetail> orderDetail = new ArrayList<>();
+
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
 
-    public Order(Long orderId, String status, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Order(Long orderId, String status, List<OrderDetail> orderDetail, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.orderId = orderId;
         this.status = status;
+        this.orderDetail = orderDetail;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
     }
@@ -44,6 +52,14 @@ public class Order {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<OrderDetail> getOrderDetail() {
+        return orderDetail;
+    }
+
+    public void setOrderDetail(List<OrderDetail> orderDetail) {
+        this.orderDetail = orderDetail;
     }
 
     public LocalDateTime getUpdatedAt() {
