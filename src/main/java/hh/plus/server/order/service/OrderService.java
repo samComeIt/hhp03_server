@@ -24,7 +24,6 @@ public class OrderService {
     public Order updateOrder(Long orderId, String status)
     {
         Order order = orderRepository.findById(orderId).get();
-        
         order.setStatus(status);
         return orderRepository.save(order);
     }

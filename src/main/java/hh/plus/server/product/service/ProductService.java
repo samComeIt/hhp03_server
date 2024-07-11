@@ -1,5 +1,6 @@
 package hh.plus.server.product.service;
 
+import hh.plus.server.order.service.OrderDetailRepository;
 import hh.plus.server.product.domain.entity.Product;
 import hh.plus.server.product.domain.entity.ProductOption;
 import hh.plus.server.product.domain.repository.ProductOptionRepository;
@@ -8,7 +9,10 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
+import java.time.LocalDate;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,18 +20,11 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
-
-    private final ProductOptionRepository productOptionRepository;
+    private final OrderDetailRepository orderDetailRepository;
 
     public Optional<Product> getProductById(Long productId)
     {
         Optional<Product> productOptional = productRepository.findById(productId);
-        return productOptional;
-    }
-
-    public Optional<ProductOption> getOptionById(Long productOptionId)
-    {
-        Optional<ProductOption> productOptional = productOptionRepository.findById(productOptionId);
         return productOptional;
     }
 
@@ -44,6 +41,11 @@ public class ProductService {
         product.setProductOption(Collections.singletonList(option));
 
         return product;
+    }
+
+    public List<Product> getTopSoldProduct(LocalDate startDate, LocalDate endDate)
+    {
+        return orderDetailRepository.findTopSoldProduct(startDate, endDate);
     }
 
 }
