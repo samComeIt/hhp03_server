@@ -25,13 +25,8 @@ public class OrderDetail {
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
-
-    @ManyToOne
-    @JoinColumn(name = "product_option_id")
-    private ProductOption productOption;
+    private Long productId;
+    private Long productOptionId;
 
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;

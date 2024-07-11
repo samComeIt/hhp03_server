@@ -44,4 +44,13 @@ public class OrderController {
     @PostMapping("/create")
     public OrderCreateResponseDto createOrder(@RequestBody OrderCreateRequestDto orderCreateRequestDto) {
         return OrderCreateResponseDto.response(100L, Arrays.asList(200L, 201L, 202L));}
+
+    @Operation(summary = "Update order status", description = "Update an order")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully updated"),
+            @ApiResponse(responseCode = "404", description = "Not found - Missing data from request body"),
+    })
+    @PatchMapping("/{order_id}")
+    public OrderResponseDto updateOrder(@PathVariable long orderId, @RequestBody String status) {
+        return OrderResponseDto.response(orderId, Arrays.asList(100L, 101L)); }
 }

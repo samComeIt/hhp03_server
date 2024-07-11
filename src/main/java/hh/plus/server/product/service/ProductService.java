@@ -2,6 +2,8 @@ package hh.plus.server.product.service;
 
 import hh.plus.server.product.domain.entity.Product;
 import hh.plus.server.product.domain.entity.ProductOption;
+import hh.plus.server.product.domain.repository.ProductOptionRepository;
+import hh.plus.server.product.domain.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

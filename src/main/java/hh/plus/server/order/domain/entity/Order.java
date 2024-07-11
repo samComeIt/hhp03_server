@@ -5,6 +5,7 @@ import hh.plus.server.payment.domain.entity.Payment;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -17,12 +18,16 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<Payment> payment;
+    private String status;
 
-    public Order(Long orderId, List<Payment> payment) {
+    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt;
+
+    public Order(Long orderId, String status, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.orderId = orderId;
-        this.payment = payment;
+        this.status = status;
+        this.updatedAt = updatedAt;
+        this.createdAt = createdAt;
     }
 
     public Long getOrderId() {
@@ -33,11 +38,27 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public List<Payment> getPayment() {
-        return payment;
+    public String getStatus() {
+        return status;
     }
 
-    public void setPayment(List<Payment> payment) {
-        this.payment = payment;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

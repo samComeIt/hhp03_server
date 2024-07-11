@@ -2,7 +2,7 @@ package hh.plus.server.payment.domain.impl;
 
 import hh.plus.server.payment.domain.entity.Payment;
 import hh.plus.server.payment.domain.repository.PaymentJpaRepository;
-import hh.plus.server.payment.service.PaymentRepository;
+import hh.plus.server.payment.domain.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

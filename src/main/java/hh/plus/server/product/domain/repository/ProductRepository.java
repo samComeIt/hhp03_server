@@ -1,4 +1,4 @@
-package hh.plus.server.product.service;
+package hh.plus.server.product.domain.repository;
 
 import hh.plus.server.product.domain.entity.Product;
 

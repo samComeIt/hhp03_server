@@ -1,4 +1,4 @@
-package hh.plus.server.payment.service;
+package hh.plus.server.payment.domain.repository;
 
 import hh.plus.server.payment.domain.entity.Payment;
 

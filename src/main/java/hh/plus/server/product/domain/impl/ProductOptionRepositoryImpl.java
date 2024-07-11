@@ -2,7 +2,7 @@ package hh.plus.server.product.domain.impl;
 
 import hh.plus.server.product.domain.entity.ProductOption;
 import hh.plus.server.product.domain.repository.ProductOptionJpaRepository;
-import hh.plus.server.product.service.ProductOptionRepository;
+import hh.plus.server.product.domain.repository.ProductOptionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

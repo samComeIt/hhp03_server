@@ -15,22 +15,21 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;
-
-    @ManyToOne
-    @JoinColumn(name="order_id", nullable = false)
-    private Order order;
+    private Long orderId;
     private String type;
     private String methodType;
     private String status;
+    private Long amount;
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
 
-    public Payment(Long paymentId, Order order, String type, String methodType, String status, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Payment(Long paymentId, Long orderId, String type, String methodType, String status, Long amount, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.paymentId = paymentId;
-        this.order = order;
+        this.orderId = orderId;
         this.type = type;
         this.methodType = methodType;
         this.status = status;
+        this.amount = amount;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
     }
@@ -43,12 +42,12 @@ public class Payment {
         this.paymentId = paymentId;
     }
 
-    public Order getOrder() {
-        return order;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public String getType() {
@@ -73,6 +72,14 @@ public class Payment {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Long amount) {
+        this.amount = amount;
     }
 
     public LocalDateTime getUpdatedAt() {
