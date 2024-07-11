@@ -7,6 +7,7 @@ import hh.plus.server.orderSheet.controller.dto.request.OrderSheetRequestDto;
 import hh.plus.server.orderSheet.domain.entity.OrderSheet;
 import hh.plus.server.orderSheet.domain.entity.OrderSheetItem;
 import hh.plus.server.orderSheet.domain.repository.OrderSheetRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class OrderSheetService {
     private final OrderSheetRepository orderSheetRepository;
 
+    @Transactional
     public OrderSheet createOrder(OrderSheetRequestDto orderSheetRequestDto)
     {
         OrderSheet orderSheet = new OrderSheet();

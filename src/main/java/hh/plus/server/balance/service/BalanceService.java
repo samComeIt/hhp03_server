@@ -3,6 +3,7 @@ package hh.plus.server.balance.service;
 import hh.plus.server.balance.controller.dto.BalanceResponseDto;
 import hh.plus.server.balance.domain.entity.Balance;
 import hh.plus.server.balance.domain.repository.BalanceRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ public class BalanceService {
 
     private final BalanceRepository balanceRepository;
 
+    @Transactional
     public BalanceResponseDto updateBalance(Long balanceId, Long amount)
     {
         Optional<Balance> optionalBalance = balanceRepository.findById(balanceId);
