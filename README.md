@@ -6,7 +6,7 @@ Task 5 시나리오 분석 및 작업 계획
 
 
 ![sequenceDiagram/balance/PatchPointAPI.png](sequenceDiagram/balance/PatchPointAPI.png)
-![sequenceDiagram/order/PostOrderAPI.png](sequenceDiagram/order/PostOrderAPI.png)
+![sequenceDiagram/order/PostOrderAPI.png](sequenceDiagram/order/OrderProcess.png)
 
 시퀀스 다이어그램 더 보기(상품/주문/잔액 조회 등)
 - [상품 조회](sequenceDiagram/product/GetProductAPI.png)
