@@ -3,6 +3,7 @@ package hh.plus.server.product.domain.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import hh.plus.server.product.domain.Status;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@Builder
 @Entity
 @NoArgsConstructor
 @Table(name = "product", indexes = {

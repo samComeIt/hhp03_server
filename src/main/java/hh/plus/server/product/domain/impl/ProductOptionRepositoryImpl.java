@@ -16,4 +16,7 @@ public class ProductOptionRepositoryImpl implements ProductOptionRepository {
     @Override
     public Optional<ProductOption> findById(Long productOptionId) {
         return productOptionJpaRepository.findById(productOptionId);}
+
+    @Override
+    public ProductOption save(ProductOption productOption) { return productOptionJpaRepository.save(productOption); }
 }

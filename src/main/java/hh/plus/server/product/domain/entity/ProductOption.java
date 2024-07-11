@@ -126,4 +126,18 @@ public class ProductOption {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+    public void minusStock(Long stock)
+    {
+        if(this.stock - stock < 0) throw new RuntimeException("Cannot be minus");
+
+        this.setStock(this.stock - stock);
+    }
+
+    public void plusStock(Long stock)
+    {
+        if(this.stock + stock < 0) throw new RuntimeException("Cannot be minus");
+
+        this.setStock(this.stock + stock);
+    }
 }
