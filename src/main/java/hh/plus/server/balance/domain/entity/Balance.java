@@ -1,10 +1,12 @@
 package hh.plus.server.balance.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Builder
 @Entity
 @NoArgsConstructor
 @Table(name = "balance", indexes = {

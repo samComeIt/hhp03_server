@@ -1,4 +1,4 @@
-package hh.plus.server.controller;
+package hh.plus.server.balance;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,11 +49,31 @@ public class BalanceControllerTest {
         // when
         when(balanceService.getBalanceById(balanceId)).thenReturn(balance);
 
-        // Performing GET request to "/api/point/{userId}"
+        // Performing GET request to "/api/point/{balanceId}"
         // then
         mockMvc.perform(get("/api/balance/{balanceId}", balanceId))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.balance").value(point));
+    }
+
+    @Test
+    @DisplayName("유저 잔액 업데이트 실패 케이스")
+    void testPatchUserCurPointFail() throws Exception {
+        // given
+        Long balanceId = 100L;
+        Long point = 0L;
+        Balance balance = new Balance(balanceId, point);
+
+        // when
+        when(balanceService.getBalanceById(balanceId)).thenReturn(balance);
+
+        // Performing Patch request to "/api/point/{balanceId}"
+        // then
+        mockMvc.perform(patch("/api/balance/{balanceId}", balanceId))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.balance").value(point));
     }
 
     public class Balance {
@@ -68,6 +89,8 @@ public class BalanceControllerTest {
 
     public interface BalanceService {
         Balance getBalanceById(Long balanceId);
+
+        Balance save(Balance balance);
     }
 
     public class MockUserService implements BalanceService {
@@ -77,5 +100,13 @@ public class BalanceControllerTest {
         {
             return balance.get(userId);
         }
+
+        @Override
+        public Balance save(Balance balanceData) {
+            Balance balance1 = new Balance(balanceData.balanceId, balanceData.balance);
+            balance.put(balance1.balanceId, balance1);
+            return balance.get(balance1.balanceId);
+        }
+
     }
 }
