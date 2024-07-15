@@ -20,13 +20,9 @@ public class BalanceService {
     @Transactional
     public BalanceResponseDto updateBalance(Long balanceId, Long amount)
     {
-        Optional<Balance> optionalBalance = balanceRepository.findById(balanceId);
+        Balance balance = balanceRepository.findById(balanceId)
+                .orElseThrow(() -> new IllegalArgumentException("Balance not found"));
 
-        if (optionalBalance.isEmpty()) throw new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "balanceId does not exist"
-        );
-
-        Balance balance = optionalBalance.get();
         balance.newBalance(amount);
         balanceRepository.save(balance);
 
@@ -35,15 +31,10 @@ public class BalanceService {
 
     public BalanceResponseDto getBalanceByBalanceId(Long balanceId) {
 
-        Optional<Balance> optionalBalance = balanceRepository.findById(balanceId);
+        Balance balance = balanceRepository.findById(balanceId)
+                .orElseThrow(() -> new IllegalArgumentException("Balance not found"));
 
-        if (optionalBalance.isEmpty()) throw new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "balanceId does not exist"
-        );
-
-        Balance balance = optionalBalance.get();
         return new BalanceResponseDto(balance.getBalanceId(), balance.getBalance());
-
     }
 
 }
