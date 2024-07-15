@@ -1,26 +1,19 @@
 package hh.plus.server.payment.service;
 
-import hh.plus.server.order.domain.entity.Order;
-import hh.plus.server.order.service.OrderRepository;
 import hh.plus.server.payment.config.PaymentStatus;
 import hh.plus.server.payment.controller.dto.PaymentDto;
 import hh.plus.server.payment.domain.entity.Payment;
 import hh.plus.server.payment.domain.repository.PaymentRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class PaymentService {
     private final PaymentRepository paymentRepository;
-
-    private final OrderRepository orderRepository;
 
     @Transactional
     public PaymentDto addPayment(PaymentDto paymentDto)
