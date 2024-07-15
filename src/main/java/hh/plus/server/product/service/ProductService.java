@@ -1,6 +1,6 @@
 package hh.plus.server.product.service;
 
-import hh.plus.server.order.service.OrderDetailRepository;
+import hh.plus.server.order.domain.repository.OrderDetailRepository;
 import hh.plus.server.product.controller.dto.productOption.ProductOptionResponseDto;
 import hh.plus.server.product.domain.entity.Product;
 import hh.plus.server.product.domain.entity.ProductOption;
@@ -9,9 +9,7 @@ import hh.plus.server.product.domain.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.awt.print.Pageable;
 import java.time.LocalDate;
