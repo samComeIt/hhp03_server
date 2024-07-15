@@ -1,6 +1,7 @@
 package hh.plus.server.product.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import hh.plus.server.payment.config.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 

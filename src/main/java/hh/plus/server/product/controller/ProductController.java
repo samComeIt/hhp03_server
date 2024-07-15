@@ -39,7 +39,7 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Not found - The product does not exist"),
     })
     @GetMapping("/product/{product_id}")
-    public Optional<Product> getProduct(@PathVariable long product_id){
+    public Product getProduct(@PathVariable long product_id){
         return productService.getProductById(product_id);
     }
 

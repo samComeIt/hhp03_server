@@ -3,7 +3,6 @@ package hh.plus.server.product.controller;
 import hh.plus.server.product.controller.dto.productOption.ProductOptionResponseDto;
 import hh.plus.server.product.domain.entity.Product;
 import hh.plus.server.product.domain.entity.ProductOption;
-import hh.plus.server.product.service.ProductOptionService;
 import hh.plus.server.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/option")
 @RequiredArgsConstructor
 public class ProductOptionController {
-    private final ProductOptionService productOptionService;
+    private final ProductService productService;
 
     @Operation(summary = "Update product stock by option id", description = "Returns a product with a certain option")
     @ApiResponses(value = {
