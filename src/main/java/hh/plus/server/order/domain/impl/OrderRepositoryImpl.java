@@ -2,7 +2,7 @@ package hh.plus.server.order.domain.impl;
 
 import hh.plus.server.order.domain.entity.Order;
 import hh.plus.server.order.domain.repository.OrderJpaRepository;
-import hh.plus.server.order.service.OrderRepository;
+import hh.plus.server.order.domain.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,6 @@
-package hh.plus.server.orderSheet.domain.repository;
+package hh.plus.server.order.domain.repository;
 
-import hh.plus.server.orderSheet.controller.dto.OrderSheetDto;
-import hh.plus.server.orderSheet.domain.entity.OrderSheet;
+import hh.plus.server.order.domain.entity.OrderSheet;
 
 import java.util.Optional;
 

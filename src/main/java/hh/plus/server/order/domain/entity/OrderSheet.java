@@ -1,6 +1,5 @@
-package hh.plus.server.orderSheet.domain.entity;
+package hh.plus.server.order.domain.entity;
 
-import hh.plus.server.payment.domain.entity.Payment;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 

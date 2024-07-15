@@ -1,4 +1,4 @@
-package hh.plus.server.order.service;
+package hh.plus.server.order.domain.repository;
 
 import hh.plus.server.order.domain.entity.Order;
 

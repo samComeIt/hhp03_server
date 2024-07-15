@@ -1,4 +1,4 @@
-package hh.plus.server.orderSheet.controller.dto;
+package hh.plus.server.order.controller.dto;
 
 import lombok.Data;
 

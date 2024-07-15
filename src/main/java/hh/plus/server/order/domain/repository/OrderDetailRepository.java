@@ -1,8 +1,7 @@
-package hh.plus.server.order.service;
+package hh.plus.server.order.domain.repository;
 
 import hh.plus.server.product.domain.entity.Product;
 
-import java.awt.print.Pageable;
 import java.time.LocalDate;
 import java.util.List;
 

@@ -1,9 +1,8 @@
-package hh.plus.server.orderSheet.domain.impl;
+package hh.plus.server.order.domain.impl;
 
-import hh.plus.server.orderSheet.controller.dto.OrderSheetDto;
-import hh.plus.server.orderSheet.domain.entity.OrderSheet;
-import hh.plus.server.orderSheet.domain.repository.OrderSheetJpaRepository;
-import hh.plus.server.orderSheet.domain.repository.OrderSheetRepository;
+import hh.plus.server.order.domain.entity.OrderSheet;
+import hh.plus.server.order.domain.repository.OrderSheetJpaRepository;
+import hh.plus.server.order.domain.repository.OrderSheetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
