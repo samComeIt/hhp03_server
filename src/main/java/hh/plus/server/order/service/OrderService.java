@@ -10,7 +10,7 @@ import hh.plus.server.order.domain.entity.OrderSheet;
 import hh.plus.server.order.domain.entity.OrderSheetItem;
 import hh.plus.server.order.domain.repository.OrderRepository;
 import hh.plus.server.order.domain.repository.OrderSheetRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -46,6 +46,7 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
+    @Transactional(readOnly = true)
     public Order getOrderById(Long orderId)
     {
         Order order = orderRepository.findById(orderId)
@@ -65,6 +66,7 @@ public class OrderService {
         return orderSheetRepository.save(orderSheet);
     }
 
+    @Transactional(readOnly = true)
     public OrderSheet findOrderSheetById(Long orderSheetId)
     {
         OrderSheet orderSheet = orderSheetRepository.findById(orderSheetId)
@@ -73,6 +75,7 @@ public class OrderService {
         return orderSheet;
     }
 
+    @Transactional
     public void deleteOrderSheet(Long orderSheetId)
     {
         OrderSheet orderSheet = orderSheetRepository.findById(orderSheetId)

@@ -48,5 +48,12 @@ public class Balance {
         if(this.balance + amount < 0) throw new RuntimeException("Cannot be minus");
 
         this.balance += amount;
+        changeUpdatedAt();
+    }
+
+
+    public void changeUpdatedAt()
+    {
+        this.updatedAt = LocalDateTime.now();
     }
 }

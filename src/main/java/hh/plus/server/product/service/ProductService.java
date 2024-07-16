@@ -7,7 +7,7 @@ import hh.plus.server.product.domain.entity.ProductOption;
 import hh.plus.server.product.domain.repository.ProductOptionRepository;
 import hh.plus.server.product.domain.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +25,14 @@ public class ProductService {
     private final ProductOptionRepository productOptionRepository;
     private final OrderDetailRepository orderDetailRepository;
 
+    @Transactional(readOnly = true)
     public Product getProductById(Long productId)
     {
         return productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found"));
     }
 
+    @Transactional(readOnly = true)
     public Product getProductAndOptioById(Long productId, Long productOptionId)
     {
         Product product = productRepository.findById(productId)
@@ -46,11 +48,13 @@ public class ProductService {
         return product;
     }
 
+    @Transactional(readOnly = true)
     public List<Product> getTopSoldProduct(LocalDate startDate, LocalDate endDate)
     {
         return orderDetailRepository.findTopSoldProduct(startDate, endDate);
     }
 
+    @Transactional(readOnly = true)
     public ProductOption getOptionById(Long productOptionId)
     {
         return productOptionRepository.findById(productOptionId)
