@@ -25,6 +25,6 @@ public class ProductOptionController {
     })
     @PatchMapping("/{productOptionId}")
     public ProductOptionResponseDto updateStockById(@PathVariable long productOptionId, @RequestBody long stock){
-        return ProductOptionResponseDto.response(productOptionId, stock);
+        return productService.updateStockById(productOptionId, stock);
     }
 }
