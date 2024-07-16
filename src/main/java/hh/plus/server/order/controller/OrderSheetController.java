@@ -2,7 +2,9 @@ package hh.plus.server.order.controller;
 
 
 import hh.plus.server.order.controller.dto.request.OrderSheetRequestDto;
+import hh.plus.server.order.domain.entity.Order;
 import hh.plus.server.order.domain.entity.OrderSheet;
+import hh.plus.server.order.domain.entity.OrderSheetItem;
 import hh.plus.server.order.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -32,8 +34,8 @@ public class OrderSheetController {
             @ApiResponse(responseCode = "404", description = "Not found - The order sheet does not exist"),
     })
     @PostMapping("/create")
-    public OrderSheet getOrderSheet(@RequestBody OrderSheetRequestDto orderSheetRequestDto){
-        return orderService.createOrderSheet(orderSheetRequestDto); }
+    public OrderSheet createOrderSheet(@RequestBody OrderSheet orderSheet){
+        return orderService.createOrderSheet(orderSheet); }
 
     /**
      * 주문서 조회

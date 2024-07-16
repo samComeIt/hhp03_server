@@ -3,8 +3,6 @@ package hh.plus.server.order.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import hh.plus.server.order.config.OrderStatus;
-import hh.plus.server.payment.domain.entity.Payment;
-import hh.plus.server.product.domain.entity.ProductOption;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
@@ -31,8 +29,7 @@ public class Order {
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
 
-    public Order(Long orderId, OrderStatus status, List<OrderDetail> orderDetail, LocalDateTime updatedAt, LocalDateTime createdAt) {
-        this.orderId = orderId;
+    public Order(OrderStatus status, List<OrderDetail> orderDetail, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.status = status;
         this.orderDetail = orderDetail;
         this.updatedAt = updatedAt;

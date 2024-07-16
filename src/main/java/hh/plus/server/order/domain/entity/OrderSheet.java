@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,12 +18,11 @@ public class OrderSheet {
     private Long orderSheetId;
 
     @OneToMany(mappedBy = "orderSheet", cascade = CascadeType.ALL)
-    private List<OrderSheetItem> orderSheetItem;
+    private List<OrderSheetItem> orderSheetItem = new ArrayList<>();
 
     private LocalDateTime createdAt;
 
-    public OrderSheet(Long orderSheetId, List<OrderSheetItem> orderSheetItem, LocalDateTime createdAt) {
-        this.orderSheetId = orderSheetId;
+    public OrderSheet(List<OrderSheetItem> orderSheetItem, LocalDateTime createdAt) {
         this.orderSheetItem = orderSheetItem;
         this.createdAt = createdAt;
     }

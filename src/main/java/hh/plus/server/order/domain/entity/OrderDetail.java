@@ -33,8 +33,7 @@ public class OrderDetail {
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
 
-    public OrderDetail(Long orderDetailId, Order order, String status, Long totalCnt, Long totalPrice, Long singlePrice, String pname, String poptionName, Long productId, Long productOptionId, LocalDateTime updatedAt, LocalDateTime createdAt) {
-        this.orderDetailId = orderDetailId;
+    public OrderDetail(Order order, String status, Long totalCnt, Long totalPrice, Long singlePrice, String pname, String poptionName, Long productId, Long productOptionId, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.order = order;
         this.status = status;
         this.totalCnt = totalCnt;

@@ -32,8 +32,7 @@ public class OrderSheetItem {
     private Long productId;
     private Long productOptionId;
 
-    public OrderSheetItem(Long orderSheetItemId, OrderSheet orderSheet, String status, Long totalCnt, Long totalPrice, Long singlePrice, String pname, String poptionName, LocalDateTime updatedAt, LocalDateTime createdAt, Long productId, Long productOptionId) {
-        this.orderSheetItemId = orderSheetItemId;
+    public OrderSheetItem(OrderSheet orderSheet, String status, Long totalCnt, Long totalPrice, Long singlePrice, String pname, String poptionName, LocalDateTime updatedAt, LocalDateTime createdAt, Long productId, Long productOptionId) {
         this.orderSheet = orderSheet;
         this.status = status;
         this.totalCnt = totalCnt;

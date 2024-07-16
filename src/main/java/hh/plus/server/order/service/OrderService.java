@@ -1,6 +1,7 @@
 package hh.plus.server.order.service;
 
 import hh.plus.server.order.config.OrderStatus;
+import hh.plus.server.order.controller.dto.OrderCreateRequestDto;
 import hh.plus.server.order.controller.dto.request.OrderSheetItemRequestDto;
 import hh.plus.server.order.controller.dto.request.OrderSheetRequestDto;
 import hh.plus.server.order.domain.entity.Order;
@@ -11,11 +12,13 @@ import hh.plus.server.order.domain.repository.OrderRepository;
 import hh.plus.server.order.domain.repository.OrderSheetRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderService {
@@ -23,8 +26,11 @@ public class OrderService {
     private final OrderSheetRepository orderSheetRepository;
 
     @Transactional
-    public Order createOrder(Order order)
+    public Order createOrder(Order orderRequest)
     {
+        log.info("OrderCreateRequestDto : {}", orderRequest);
+
+        Order order = new Order(orderRequest.getStatus(), orderRequest.getOrderDetail(), LocalDateTime.now(), LocalDateTime.now());
         for (OrderDetail orderDetail : order.getOrderDetail()) {
             orderDetail.setOrder(order);
         }
@@ -40,16 +46,21 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    @Transactional
-    public OrderSheet createOrderSheet(OrderSheetRequestDto orderSheetRequestDto)
+    public Order getOrderById(Long orderId)
     {
-        OrderSheet orderSheet = new OrderSheet();
-        orderSheet.setCreatedAt(LocalDateTime.now());
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Order not found"));
 
+        return order;
+    }
 
-        for (OrderSheetItemRequestDto itemRequestDto : orderSheetRequestDto.getOrderSheetItem()) {
-            OrderSheetItem orderSheetItem = new OrderSheetItem();
-            //orderSheetItem.setStatus(itemRequestDto.get);
+    @Transactional
+    public OrderSheet createOrderSheet(OrderSheet orderSheetRequest)
+    {
+        OrderSheet orderSheet = new OrderSheet(orderSheetRequest.getOrderSheetItem(), LocalDateTime.now());
+
+        for (OrderSheetItem orderSheetItem : orderSheetRequest.getOrderSheetItem()) {
+            orderSheetItem.setOrderSheet(orderSheet);
         }
         return orderSheetRepository.save(orderSheet);
     }
