@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Builder
 @Entity
 @NoArgsConstructor
 @Table(name = "balance", indexes = {
@@ -22,8 +21,7 @@ public class Balance {
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
 
-    public Balance(Long balanceId, Long balance, LocalDateTime updatedAt, LocalDateTime createdAt) {
-        this.balanceId = balanceId;
+    public Balance(Long balance, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.balance = balance;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
@@ -33,38 +31,22 @@ public class Balance {
         return balanceId;
     }
 
-    public void setBalanceId(Long balanceId) {
-        this.balanceId = balanceId;
-    }
-
     public Long getBalance() {
         return balance;
-    }
-
-    public void setBalance(Long balance) {
-        this.balance = balance;
     }
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 
     public void newBalance(Long amount)
     {
         if(this.balance + amount < 0) throw new RuntimeException("Cannot be minus");
 
-        this.setBalance(this.balance + amount);
+        this.balance += amount;
     }
 }
