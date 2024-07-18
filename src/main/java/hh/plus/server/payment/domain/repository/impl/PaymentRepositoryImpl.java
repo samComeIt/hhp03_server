@@ -1,4 +1,4 @@
-package hh.plus.server.payment.domain.impl;
+package hh.plus.server.payment.domain.repository.impl;
 
 import hh.plus.server.payment.domain.entity.Payment;
 import hh.plus.server.payment.domain.repository.PaymentJpaRepository;

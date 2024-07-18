@@ -1,4 +1,4 @@
-package hh.plus.server.product.domain.impl;
+package hh.plus.server.product.domain.repository.impl;
 
 import hh.plus.server.product.domain.entity.ProductOption;
 import hh.plus.server.product.domain.repository.ProductOptionJpaRepository;

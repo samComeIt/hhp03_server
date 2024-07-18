@@ -1,4 +1,4 @@
-package hh.plus.server.order.domain.impl;
+package hh.plus.server.order.domain.repository.impl;
 
 import hh.plus.server.order.domain.entity.OrderSheet;
 import hh.plus.server.order.domain.repository.OrderSheetJpaRepository;

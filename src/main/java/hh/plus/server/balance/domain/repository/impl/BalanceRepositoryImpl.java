@@ -1,4 +1,4 @@
-package hh.plus.server.balance.domain.impl;
+package hh.plus.server.balance.domain.repository.impl;
 
 import hh.plus.server.balance.domain.entity.Balance;
 import hh.plus.server.balance.domain.repository.BalanceJpaRepository;

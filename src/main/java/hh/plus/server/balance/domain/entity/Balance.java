@@ -21,7 +21,9 @@ public class Balance {
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
 
-    public Balance(Long balance, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    @Builder
+    public Balance(Long balanceId, Long balance, LocalDateTime updatedAt, LocalDateTime createdAt) {
+        this.balanceId = balanceId;
         this.balance = balance;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
