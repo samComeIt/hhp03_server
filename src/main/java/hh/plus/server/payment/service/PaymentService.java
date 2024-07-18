@@ -1,7 +1,7 @@
 package hh.plus.server.payment.service;
 
-import hh.plus.server.payment.config.PaymentStatus;
-import hh.plus.server.payment.controller.dto.PaymentDto;
+import hh.plus.server.payment.domain.PaymentStatus;
+import hh.plus.server.payment.service.dto.PaymentDto;
 import hh.plus.server.payment.domain.entity.Payment;
 import hh.plus.server.payment.domain.repository.PaymentRepository;
 import jakarta.transaction.Transactional;

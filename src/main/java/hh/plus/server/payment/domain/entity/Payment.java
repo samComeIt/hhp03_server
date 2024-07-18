@@ -1,7 +1,6 @@
 package hh.plus.server.payment.domain.entity;
 
-import hh.plus.server.order.domain.entity.Order;
-import hh.plus.server.payment.config.PaymentStatus;
+import hh.plus.server.payment.domain.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 

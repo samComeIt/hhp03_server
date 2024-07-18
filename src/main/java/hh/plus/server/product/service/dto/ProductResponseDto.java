@@ -1,4 +1,4 @@
-package hh.plus.server.product.controller.dto;
+package hh.plus.server.product.service.dto;
 
 import java.util.List;
 

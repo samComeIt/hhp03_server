@@ -54,6 +54,7 @@ public class BalanceController {
     })
     @PatchMapping("/{balanceId}")
     public ResponseEntity<BalanceResponseDto> updateBalance(@PathVariable long balanceId, @RequestBody long amount){
+        log.info("Controller updateBalance : {}, {}", balanceId, amount);
         BalanceResponseDto balanceResponseDto = balanceService.updateBalance(balanceId, amount);
         return ResponseEntity.ok(balanceResponseDto);
     }

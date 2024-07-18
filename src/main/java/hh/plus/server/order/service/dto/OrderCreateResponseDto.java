@@ -1,6 +1,6 @@
-package hh.plus.server.order.controller.dto;
+package hh.plus.server.order.service.dto;
 
-import hh.plus.server.order.config.OrderStatus;
+import hh.plus.server.order.domain.OrderStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;

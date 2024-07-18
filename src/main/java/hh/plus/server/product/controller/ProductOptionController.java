@@ -1,8 +1,6 @@
 package hh.plus.server.product.controller;
 
-import hh.plus.server.product.controller.dto.productOption.ProductOptionResponseDto;
-import hh.plus.server.product.domain.entity.Product;
-import hh.plus.server.product.domain.entity.ProductOption;
+import hh.plus.server.product.service.dto.productOption.ProductOptionResponseDto;
 import hh.plus.server.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

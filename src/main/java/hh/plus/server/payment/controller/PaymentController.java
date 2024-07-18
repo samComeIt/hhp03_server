@@ -1,16 +1,14 @@
 package hh.plus.server.payment.controller;
 
-import hh.plus.server.payment.config.PaymentStatus;
-import hh.plus.server.payment.controller.dto.PaymentDto;
-import hh.plus.server.payment.controller.dto.PaymentRequestDto;
+import hh.plus.server.payment.domain.PaymentStatus;
+import hh.plus.server.payment.service.dto.PaymentDto;
+import hh.plus.server.payment.service.dto.PaymentRequestDto;
 import hh.plus.server.payment.service.PaymentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

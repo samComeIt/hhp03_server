@@ -1,4 +1,4 @@
-package hh.plus.server.product.controller.dto.productOption;
+package hh.plus.server.product.service.dto.productOption;
 
 public record ProductOptionResponseDto (
         Long productOptionId,

@@ -1,4 +1,4 @@
-package hh.plus.server.order.controller.dto;
+package hh.plus.server.order.service.dto;
 
 public record OrderDetailResponseDto (
     Long orderDetailId

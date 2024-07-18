@@ -1,4 +1,4 @@
-package hh.plus.server.payment.config;
+package hh.plus.server.payment.domain;
 
 public enum PaymentStatus {
     PENDING,

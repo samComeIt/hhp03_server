@@ -2,7 +2,7 @@ package hh.plus.server.order.domain.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import hh.plus.server.order.config.OrderStatus;
+import hh.plus.server.order.domain.OrderStatus;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 

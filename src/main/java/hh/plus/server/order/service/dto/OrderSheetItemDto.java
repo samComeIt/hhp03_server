@@ -1,11 +1,12 @@
-package hh.plus.server.order.controller.dto.request;
+package hh.plus.server.order.service.dto;
 
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-public class OrderSheetItemRequestDto {
+public class OrderSheetItemDto {
+    private Long orderSheetItemId;
     private String status;
     private Long totalCnt;
     private Long totalPrice;

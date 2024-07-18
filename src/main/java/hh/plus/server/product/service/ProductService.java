@@ -1,7 +1,7 @@
 package hh.plus.server.product.service;
 
 import hh.plus.server.order.domain.repository.OrderDetailRepository;
-import hh.plus.server.product.controller.dto.productOption.ProductOptionResponseDto;
+import hh.plus.server.product.service.dto.productOption.ProductOptionResponseDto;
 import hh.plus.server.product.domain.entity.Product;
 import hh.plus.server.product.domain.entity.ProductOption;
 import hh.plus.server.product.domain.repository.ProductOptionRepository;
@@ -11,11 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

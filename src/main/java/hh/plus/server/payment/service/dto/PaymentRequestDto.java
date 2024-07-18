@@ -1,4 +1,4 @@
-package hh.plus.server.payment.controller.dto;
+package hh.plus.server.payment.service.dto;
 
 import lombok.Builder;
 import lombok.Getter;

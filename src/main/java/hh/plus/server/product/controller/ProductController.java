@@ -1,12 +1,7 @@
 package hh.plus.server.product.controller;
 
-import hh.plus.server.balance.domain.entity.Balance;
-import hh.plus.server.product.controller.dto.ProductDetailResponseDto;
-import hh.plus.server.product.controller.dto.ProductOrderResponseDto;
-import hh.plus.server.product.controller.dto.ProductResponseDto;
-import hh.plus.server.product.controller.dto.ProductSearchRequestDto;
+import hh.plus.server.product.service.dto.ProductSearchRequestDto;
 import hh.plus.server.product.domain.entity.Product;
-import hh.plus.server.product.domain.entity.ProductOption;
 import hh.plus.server.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -15,9 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @Tag(name = "Product API")

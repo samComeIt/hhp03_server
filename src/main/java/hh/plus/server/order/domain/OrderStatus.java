@@ -1,4 +1,4 @@
-package hh.plus.server.order.config;
+package hh.plus.server.order.domain;
 
 public enum OrderStatus {
     PENDING,
