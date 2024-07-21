@@ -1,6 +1,9 @@
 package hh.plus.server.product.service;
 
+import hh.plus.server.cart.service.dto.CartItemDto;
 import hh.plus.server.order.domain.repository.OrderDetailRepository;
+import hh.plus.server.product.service.dto.ProductDto;
+import hh.plus.server.product.service.dto.ProductOptionDto;
 import hh.plus.server.product.service.dto.productOption.ProductOptionResponseDto;
 import hh.plus.server.product.domain.entity.Product;
 import hh.plus.server.product.domain.entity.ProductOption;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +35,7 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Product getProductAndOptioById(Long productId, Long productOptionId)
+    public ProductDto getProductAndOptionById(Long productId, Long productOptionId)
     {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found"));
@@ -41,9 +45,28 @@ public class ProductService {
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Product Option not found"));
 
-        product.setProductOption(Collections.singletonList(option));
+        ProductOptionDto productOptionDto = new ProductOptionDto(
+                option.getProductOptionId(),
+                option.getName(),
+                option.getStock()
+        );
 
-        return product;
+        ProductDto productDto = new ProductDto(
+                product.getProductId(),
+                product.getName(),
+                product.getProductOption().stream()
+                        .filter(opt -> opt.getProductOptionId().equals(productOptionId))
+                        .map(
+                                opt2 -> new ProductOptionDto(
+                                       opt2.getProductOptionId(),
+                                       opt2.getName(),
+                                       opt2.getStock()
+                                )
+                        ).toList()
+
+        );
+
+        return productDto;
     }
 
     @Transactional(readOnly = true)

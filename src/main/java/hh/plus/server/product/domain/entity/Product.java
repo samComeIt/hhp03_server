@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@Builder
 @Entity
 @NoArgsConstructor
 @Table(name = "product", indexes = {
@@ -26,7 +25,8 @@ public class Product {
     private Long productId;
 
     private String name;
-    private String status;
+
+    private Status status;
 
     @Column(name = "order_cnt")
     private Long orderCnt;
@@ -41,8 +41,7 @@ public class Product {
     @JsonManagedReference
     private List<ProductOption> productOption = new ArrayList<>();
 
-    public Product(Long productId, String name, String status, Long orderCnt, Boolean isDeleted, LocalDateTime createdAt, List<ProductOption> productOption) {
-        this.productId = productId;
+    public Product(String name, Status status, Long orderCnt, Boolean isDeleted, LocalDateTime createdAt, List<ProductOption> productOption) {
         this.name = name;
         this.status = status;
         this.orderCnt = orderCnt;
@@ -55,55 +54,27 @@ public class Product {
         return productId;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getStatus() {
+    public Status getStatus() {
         return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public Long getOrderCnt() {
         return orderCnt;
     }
 
-    public void setOrderCnt(Long orderCnt) {
-        this.orderCnt = orderCnt;
-    }
-
     public Boolean getDeleted() {
         return isDeleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        isDeleted = deleted;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public List<ProductOption> getProductOption() {
         return productOption;
-    }
-
-    public void setProductOption(List<ProductOption> productOption) {
-        this.productOption = productOption;
     }
 }

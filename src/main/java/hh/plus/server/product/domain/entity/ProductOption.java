@@ -1,6 +1,7 @@
 package hh.plus.server.product.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import hh.plus.server.product.domain.Status;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
@@ -28,11 +29,12 @@ public class ProductOption {
     private Product product;
 
     private String name;
-    private String status;
+    private Status status;
 
     @Column(name = "order_cnt")
     private Long orderCnt;
     private Long stock;
+    private Long price;
 
     @Column(name = "is_deleted")
     private String isDeleted;
@@ -43,13 +45,13 @@ public class ProductOption {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    public ProductOption(Long productOptionId, Product product, String name, String status, Long orderCnt, Long stock, String isDeleted, LocalDateTime updatedAt, LocalDateTime createdAt) {
-        this.productOptionId = productOptionId;
+    public ProductOption(Product product, String name, Status status, Long orderCnt, Long stock, Long price, String isDeleted, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.product = product;
         this.name = name;
         this.status = status;
         this.orderCnt = orderCnt;
         this.stock = stock;
+        this.price = price;
         this.isDeleted = isDeleted;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
@@ -59,72 +61,40 @@ public class ProductOption {
         return productOptionId;
     }
 
-    public void setProductOptionId(Long productOptionId) {
-        this.productOptionId = productOptionId;
-    }
-
     public Product getProduct() {
         return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getStatus() {
+    public Status getStatus() {
         return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public Long getOrderCnt() {
         return orderCnt;
     }
 
-    public void setOrderCnt(Long orderCnt) {
-        this.orderCnt = orderCnt;
-    }
-
     public Long getStock() {
         return stock;
     }
 
-    public void setStock(Long stock) {
-        this.stock = stock;
+    public Long getPrice() {
+        return price;
     }
 
     public String getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(String isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 
     public void minusStock(Long stock)
@@ -139,5 +109,10 @@ public class ProductOption {
         if(this.stock + stock < 0) throw new RuntimeException("Cannot be minus");
 
         this.stock += stock;
+    }
+
+    public void isStockAvailable(Long quantity)
+    {
+        if (this.stock < quantity) throw new RuntimeException("Not enough stock");
     }
 }

@@ -1,5 +1,6 @@
 package hh.plus.server.product.controller;
 
+import hh.plus.server.product.service.dto.ProductDto;
 import hh.plus.server.product.service.dto.ProductSearchRequestDto;
 import hh.plus.server.product.domain.entity.Product;
 import hh.plus.server.product.service.ProductService;
@@ -8,8 +9,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -41,8 +44,8 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Not found - The product does not exist"),
     })
     @GetMapping("/product/{productId}/detail/{productOptionId}")
-    public Product getProductAndOptioById(@PathVariable long productId, @PathVariable long productOptionId){
-        return productService.getProductAndOptioById(productId, productOptionId);
+    public ProductDto getProductAndOptionById(@PathVariable long productId, @PathVariable long productOptionId){
+        return productService.getProductAndOptionById(productId, productOptionId);
     }
 
     /**
@@ -55,7 +58,7 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Not found - The product does not exist"),
     })
     @GetMapping("/products")
-    public List<Product> getProductList(@RequestBody ProductSearchRequestDto productSearchRequestDto){
-        return productService.getTopSoldProduct(productSearchRequestDto.getStartDate(), productSearchRequestDto.getEndDate());
+    public List<Product> getProductList(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate){
+        return productService.getTopSoldProduct(startDate, endDate);
     }
 }
