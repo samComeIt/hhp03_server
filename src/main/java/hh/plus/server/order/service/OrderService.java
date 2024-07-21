@@ -1,5 +1,10 @@
 package hh.plus.server.order.service;
 
+import hh.plus.server.cart.domain.entity.Cart02;
+import hh.plus.server.cart.service.CartService;
+import hh.plus.server.cart.service.dto.Cart02Dto;
+import hh.plus.server.cart.service.dto.Cart02DtoMapper;
+import hh.plus.server.cart.service.dto.CartDtoMapper;
 import hh.plus.server.order.domain.OrderStatus;
 import hh.plus.server.order.domain.entity.Order;
 import hh.plus.server.order.domain.entity.OrderDetail;
@@ -7,12 +12,17 @@ import hh.plus.server.order.domain.entity.OrderSheet;
 import hh.plus.server.order.domain.entity.OrderSheetItem;
 import hh.plus.server.order.domain.repository.OrderRepository;
 import hh.plus.server.order.domain.repository.OrderSheetRepository;
+import hh.plus.server.order.service.dto.request.OrderScheetCreateRequestDto;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -20,6 +30,7 @@ import java.time.LocalDateTime;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderSheetRepository orderSheetRepository;
+    private final CartService cartService;
 
     @Transactional
     public Order createOrder(Order orderRequest)
@@ -51,14 +62,38 @@ public class OrderService {
         return order;
     }
 
-    @Transactional
-    public OrderSheet createOrderSheet(OrderSheet orderSheetRequest)
+    @Transactional(rollbackFor = Exception.class)
+    public OrderSheet createOrderSheet(OrderScheetCreateRequestDto orderScheetCreateRequestDto)
     {
-        OrderSheet orderSheet = new OrderSheet(orderSheetRequest.getOrderSheetItem(), LocalDateTime.now());
+        // check cart(s) exist
+        // create order sheet
 
-        for (OrderSheetItem orderSheetItem : orderSheetRequest.getOrderSheetItem()) {
-            orderSheetItem.setOrderSheet(orderSheet);
+        List<Cart02Dto> carts = new ArrayList<>();
+
+        for (Long cartId : orderScheetCreateRequestDto.cartId()) {
+            Cart02Dto cart = cartService.getCart02ById(cartId);
+            carts.add(cart);
         }
+
+        OrderSheet orderSheet = new OrderSheet();
+
+        for (Cart02Dto cart: carts)
+        {
+            orderSheet.addItem(new OrderSheetItem(
+                    orderSheet
+                    , OrderStatus.COMPLETED
+                    , cart.quantity()
+                    , cart.totalPrice()
+                    , cart.singlePrice()
+                    , cart.productName()
+                    , cart.productOptionName()
+                    , LocalDateTime.now()
+                    , LocalDateTime.now()
+                    , cart.productId()
+                    , cart.productOptionId()
+            ));
+        }
+
         return orderSheetRepository.save(orderSheet);
     }
 

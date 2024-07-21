@@ -17,7 +17,7 @@ public class OrderSheet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderSheetId;
 
-    @OneToMany(mappedBy = "orderSheet", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "orderSheet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderSheetItem> orderSheetItem = new ArrayList<>();
 
     private LocalDateTime createdAt;
@@ -31,23 +31,16 @@ public class OrderSheet {
         return orderSheetId;
     }
 
-    public void setOrderSheetId(Long orderSheetId) {
-        this.orderSheetId = orderSheetId;
-    }
-
     public List<OrderSheetItem> getOrderSheetItem() {
         return orderSheetItem;
-    }
-
-    public void setOrderSheetItem(List<OrderSheetItem> orderSheetItem) {
-        this.orderSheetItem = orderSheetItem;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void addItem(OrderSheetItem item)
+    {
+        orderSheetItem.add(item);
     }
 }
