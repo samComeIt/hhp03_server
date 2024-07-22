@@ -2,6 +2,7 @@ package hh.plus.server.order.controller;
 
 import hh.plus.server.order.domain.OrderStatus;
 import hh.plus.server.order.domain.entity.Order;
+import hh.plus.server.order.facade.OrderFacade;
 import hh.plus.server.order.service.OrderService;
 import hh.plus.server.order.service.dto.request.OrderCreateRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
+
+    private final OrderFacade orderFacade;
+
     /**
      * 주문 조회
      * @param orderId
@@ -42,7 +46,7 @@ public class OrderController {
     })
     @PostMapping("/create")
     public Order createOrder(@RequestBody OrderCreateRequestDto orderCreateRequestDto) {
-        return orderService.createOrder(orderCreateRequestDto); }
+        return orderFacade.createOrder(orderCreateRequestDto); }
 
     @Operation(summary = "Update order status", description = "Update an order")
     @ApiResponses(value = {
