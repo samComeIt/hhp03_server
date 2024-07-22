@@ -3,6 +3,7 @@ package hh.plus.server.order.controller;
 import hh.plus.server.order.domain.OrderStatus;
 import hh.plus.server.order.domain.entity.Order;
 import hh.plus.server.order.service.OrderService;
+import hh.plus.server.order.service.dto.request.OrderCreateRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -40,8 +41,8 @@ public class OrderController {
             @ApiResponse(responseCode = "404", description = "Not found - Missing data from request body"),
     })
     @PostMapping("/create")
-    public Order createOrder(@RequestBody Order order) {
-        return orderService.createOrder(order); }
+    public Order createOrder(@RequestBody OrderCreateRequestDto orderCreateRequestDto) {
+        return orderService.createOrder(orderCreateRequestDto); }
 
     @Operation(summary = "Update order status", description = "Update an order")
     @ApiResponses(value = {

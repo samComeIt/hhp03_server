@@ -1,16 +1,15 @@
 package hh.plus.server.order.domain.repository;
 
-import hh.plus.server.order.domain.entity.OrderDetail;
+import hh.plus.server.order.domain.entity.OrderItem;
 import hh.plus.server.product.domain.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface OrderDetailJpaRepository extends JpaRepository<OrderDetail, Long> {
+public interface OrderDetailJpaRepository extends JpaRepository<OrderItem, Long> {
 
     @Query(value = "SELECT od.product " +
             "FROM OrderDetail od" +

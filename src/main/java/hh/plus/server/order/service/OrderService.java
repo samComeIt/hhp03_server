@@ -1,18 +1,28 @@
 package hh.plus.server.order.service;
 
-import hh.plus.server.cart.domain.entity.Cart02;
+import hh.plus.server.balance.service.BalanceService;
+import hh.plus.server.balance.service.dto.BalanceResponseDto;
 import hh.plus.server.cart.service.CartService;
 import hh.plus.server.cart.service.dto.Cart02Dto;
-import hh.plus.server.cart.service.dto.Cart02DtoMapper;
-import hh.plus.server.cart.service.dto.CartDtoMapper;
+import hh.plus.server.common.exception.CustomException;
 import hh.plus.server.order.domain.OrderStatus;
 import hh.plus.server.order.domain.entity.Order;
-import hh.plus.server.order.domain.entity.OrderDetail;
+import hh.plus.server.order.domain.entity.OrderItem;
 import hh.plus.server.order.domain.entity.OrderSheet;
 import hh.plus.server.order.domain.entity.OrderSheetItem;
 import hh.plus.server.order.domain.repository.OrderRepository;
 import hh.plus.server.order.domain.repository.OrderSheetRepository;
-import hh.plus.server.order.service.dto.request.OrderScheetCreateRequestDto;
+import hh.plus.server.order.service.dto.request.OrderCreateRequestDto;
+import hh.plus.server.order.service.dto.request.OrderItemCreateRequestDto;
+import hh.plus.server.order.service.dto.request.OrderSheetCreateRequestDto;
+import hh.plus.server.payment.domain.PaymentStatus;
+import hh.plus.server.payment.domain.entity.Payment;
+import hh.plus.server.payment.domain.repository.PaymentRepository;
+import hh.plus.server.payment.service.PaymentService;
+import hh.plus.server.payment.service.dto.PaymentDto;
+import hh.plus.server.product.domain.entity.ProductOption;
+import hh.plus.server.product.service.ProductService;
+import hh.plus.server.product.service.dto.ProductDto;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +32,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -31,17 +40,95 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderSheetRepository orderSheetRepository;
     private final CartService cartService;
+    private final BalanceService balanceService;
+    private final ProductService productService;
+    private final PaymentRepository paymentRepository;
 
-    @Transactional
-    public Order createOrder(Order orderRequest)
+    @Transactional(rollbackFor = Exception.class)
+    public Order createOrder(OrderCreateRequestDto orderCreateRequestDto)
     {
-        log.info("OrderCreateRequestDto : {}", orderRequest);
+        // 잔액 확인
 
-        Order order = new Order(orderRequest.getStatus(), orderRequest.getOrderDetail(), LocalDateTime.now(), LocalDateTime.now());
-        for (OrderDetail orderDetail : order.getOrderDetail()) {
-            orderDetail.setOrder(order);
+        // 상품 존재 확인
+        // 상품 재고 확인
+        // 주문 생성
+
+        // 잔액 확인
+        // 결제 처리
+        // 잔액 업데이트
+        // 상품 재고 업데이트 처리
+
+        // 주문 상태 업데이트 생성
+
+        // 카트 삭제 처리
+
+        BalanceResponseDto balance = balanceService.getBalanceByBalanceId(orderCreateRequestDto.balanceId());
+
+        Long totalPrice = 0L;
+
+        Order order = new Order();
+
+        for(OrderItemCreateRequestDto orderItemRequest : orderCreateRequestDto.orderItemCreateRequestDto()) {
+            Long productId = orderItemRequest.productId();
+            Long productOptionId = orderItemRequest.productOptionId();
+            Long quantity = orderItemRequest.quantity();
+
+            ProductOption productOption = productService.getOptionById(productOptionId);
+            productOption.isStockAvailable(quantity);
+
+            totalPrice += orderItemRequest.totalPrice();
+
+            order.addItem(new OrderItem(
+                    order,
+                    OrderStatus.PENDING,
+                    orderItemRequest.quantity(),
+                    orderItemRequest.totalPrice(),
+                    orderItemRequest.singlePrice(),
+                    orderItemRequest.productName(),
+                    orderItemRequest.productOptionName(),
+                    orderItemRequest.productId(),
+                    orderItemRequest.productOptionId(),
+                    LocalDateTime.now(),
+                    LocalDateTime.now()
+            ));
         }
-        return orderRepository.save(order);
+
+        orderRepository.save(order);
+
+        Payment payment = new Payment(
+                order.getOrderId(),
+                "ORDER",
+                "POINT",
+                PaymentStatus.PENDING,
+                totalPrice,
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
+
+        paymentRepository.save(payment);
+
+        if (balance.balance() < totalPrice) throw new CustomException("Not enough balance");
+
+        payment.updateStatus(PaymentStatus.COMPLETED);
+        paymentRepository.save(payment);
+
+        order.updateStatus(OrderStatus.COMPLETED);
+        orderRepository.save(order);
+
+        for(OrderItemCreateRequestDto orderItemRequest : orderCreateRequestDto.orderItemCreateRequestDto()) {
+            Long productOptionId = orderItemRequest.productOptionId();
+            Long quantity = orderItemRequest.quantity();
+
+            productService.updateStockById(productOptionId, quantity);
+        }
+
+        for(OrderItemCreateRequestDto orderItemRequest : orderCreateRequestDto.orderItemCreateRequestDto()) {
+            Long cartId = orderItemRequest.cartId();
+
+            cartService.deleteCart(cartId);
+        }
+
+        return order;
     }
 
     @Transactional
@@ -63,14 +150,14 @@ public class OrderService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public OrderSheet createOrderSheet(OrderScheetCreateRequestDto orderScheetCreateRequestDto)
+    public OrderSheet createOrderSheet(OrderSheetCreateRequestDto orderSheetCreateRequestDto)
     {
         // check cart(s) exist
         // create order sheet
 
         List<Cart02Dto> carts = new ArrayList<>();
 
-        for (Long cartId : orderScheetCreateRequestDto.cartId()) {
+        for (Long cartId : orderSheetCreateRequestDto.cartId()) {
             Cart02Dto cart = cartService.getCart02ById(cartId);
             carts.add(cart);
         }
@@ -81,6 +168,7 @@ public class OrderService {
         {
             orderSheet.addItem(new OrderSheetItem(
                     orderSheet
+                    , cart.cartId()
                     , OrderStatus.COMPLETED
                     , cart.quantity()
                     , cart.totalPrice()

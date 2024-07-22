@@ -1,5 +1,6 @@
 package hh.plus.server.order.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +19,7 @@ public class OrderSheet {
     private Long orderSheetId;
 
     @OneToMany(mappedBy = "orderSheet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<OrderSheetItem> orderSheetItem = new ArrayList<>();
 
     private LocalDateTime createdAt;

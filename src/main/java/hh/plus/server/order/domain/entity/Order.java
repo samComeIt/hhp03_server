@@ -24,14 +24,14 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<OrderDetail> orderDetail = new ArrayList<>();
+    private List<OrderItem> orderItem = new ArrayList<>();
 
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
 
-    public Order(OrderStatus status, List<OrderDetail> orderDetail, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Order(OrderStatus status, List<OrderItem> orderItem, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.status = status;
-        this.orderDetail = orderDetail;
+        this.orderItem = orderItem;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
     }
@@ -40,44 +40,29 @@ public class Order {
         return orderId;
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
     public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-
-    public List<OrderDetail> getOrderDetail() {
-        return orderDetail;
-    }
-
-    public void setOrderDetail(List<OrderDetail> orderDetail) {
-        this.orderDetail = orderDetail;
+    public List<OrderItem> getOrderItem() {
+        return orderItem;
     }
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 
     public void updateStatus(OrderStatus newStatus)
     {
         this.status = newStatus;
+    }
+
+    public void addItem(OrderItem item)
+    {
+        orderItem.add(item);
     }
 }

@@ -1,5 +1,6 @@
 package hh.plus.server.order.domain.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import hh.plus.server.order.domain.OrderStatus;
 import jakarta.persistence.*;
@@ -9,59 +10,50 @@ import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
-@Table(name = "order_sheet_item", indexes = {
-        @Index(name="idx_order_sheet_item", columnList = "orderSheetItemId")
-})
-public class OrderSheetItem {
 
+@Table(name = "order_item", indexes = {
+        @Index(name="idx_order_item", columnList = "orderItemId")
+})
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderSheetItemId;
+    private Long orderItemId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_sheet_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
     @JsonBackReference
-    private OrderSheet orderSheet;
-
-    private Long cartId;
-
+    private Order order;
     private OrderStatus status;
     private Long totalCnt;
     private Long totalPrice;
     private Long singlePrice;
     private String pname;
     private String poptionName;
+    private Long productId;
+    private Long productOptionId;
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
 
-    private Long productId;
-    private Long productOptionId;
-
-    public OrderSheetItem(OrderSheet orderSheet, Long cartId, OrderStatus status, Long totalCnt, Long totalPrice, Long singlePrice, String pname, String poptionName, LocalDateTime updatedAt, LocalDateTime createdAt, Long productId, Long productOptionId) {
-        this.orderSheet = orderSheet;
-        this.cartId = cartId;
+    public OrderItem(Order order, OrderStatus status, Long totalCnt, Long totalPrice, Long singlePrice, String pname, String poptionName, Long productId, Long productOptionId, LocalDateTime updatedAt, LocalDateTime createdAt) {
+        this.order = order;
         this.status = status;
         this.totalCnt = totalCnt;
         this.totalPrice = totalPrice;
         this.singlePrice = singlePrice;
         this.pname = pname;
         this.poptionName = poptionName;
-        this.updatedAt = updatedAt;
-        this.createdAt = createdAt;
         this.productId = productId;
         this.productOptionId = productOptionId;
+        this.updatedAt = updatedAt;
+        this.createdAt = createdAt;
     }
 
-    public Long getOrderSheetItemId() {
-        return orderSheetItemId;
+    public Long getOrderItemId() {
+        return orderItemId;
     }
 
-    public OrderSheet getOrderSheet() {
-        return orderSheet;
-    }
-
-    public Long getCartId() {
-        return cartId;
+    public Order getOrder() {
+        return order;
     }
 
     public OrderStatus getStatus() {
@@ -88,19 +80,19 @@ public class OrderSheetItem {
         return poptionName;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     public Long getProductId() {
         return productId;
     }
 
     public Long getProductOptionId() {
         return productOptionId;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }
