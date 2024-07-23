@@ -36,6 +36,15 @@ public class OrderFacade {
     private final PaymentRepository paymentRepository;
 
     public Order createOrder(OrderCreateRequestDto orderCreateRequestDto) {
+
+        try {
+
+        } catch (Exception e){
+
+        } finally {
+
+        }
+
         BalanceResponseDto balance = balanceService.getBalanceByBalanceId(orderCreateRequestDto.balanceId());
         Long totalPrice = calculateTotalPrice(orderCreateRequestDto);
 
@@ -47,8 +56,7 @@ public class OrderFacade {
         // update product stock, balance
         // delete cart, orderSheet
 
-        processPayment(order, payment, totalPrice, balance);
-        updateOrder(orderCreateRequestDto);
+        processPayment(orderCreateRequestDto, order, payment, totalPrice, balance);
         deleteCartItem(orderCreateRequestDto);
 
         return order;
@@ -104,24 +112,24 @@ public class OrderFacade {
         return payment;
     }
 
-    public void processPayment(Order order, Payment payment, Long totalPrice, BalanceResponseDto balance) {
+    public void processPayment(OrderCreateRequestDto orderCreateRequestDto, Order order, Payment payment, Long totalPrice, BalanceResponseDto balance) {
 
         if (balance.balance() < totalPrice) throw new CustomException("Not enough balance");
 
-        payment.updateStatus(PaymentStatus.COMPLETED);
-        paymentRepository.save(payment);
-
-        order.updateStatus(OrderStatus.COMPLETED);
-        orderRepository.save(order);
-    }
-
-    public void updateOrder(OrderCreateRequestDto orderCreateRequestDto) {
         for(OrderItemCreateRequestDto orderItemRequest : orderCreateRequestDto.orderItemCreateRequestDto()) {
             Long productOptionId = orderItemRequest.productOptionId();
             Long quantity = orderItemRequest.quantity();
 
             productService.updateStockById(productOptionId, quantity);
         }
+
+        payment.updateStatus(PaymentStatus.COMPLETED);
+        paymentRepository.save(payment);
+
+        order.updateStatus(OrderStatus.COMPLETED);
+        orderRepository.save(order);
+
+        balanceService.updateBalance(balance.balanceId(), totalPrice);
     }
 
     public void deleteCartItem(OrderCreateRequestDto orderCreateRequestDto) {
