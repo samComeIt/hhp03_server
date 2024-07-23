@@ -12,8 +12,7 @@ public class ServerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ServerApplication.class, args);
-		SlackApi api = new SlackApi("https://hooks.slack.com/services/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");
-		api.call(new SlackMessage("Application started to run"));
+		log.info("Start application");
 	}
 
 }
