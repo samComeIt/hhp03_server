@@ -21,8 +21,16 @@ public class BalanceService {
     {
         log.info("updateBalance balanceId: {}, balance: {}", balanceId, amount);
 
-        Balance balance = balanceRepository.findById(balanceId)
+        Balance balance = balanceRepository.findByIdWithPessimisticWriteLock(balanceId)
                 .orElseThrow(() -> new CustomException("Balance not found"));
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e){
+            Thread.currentThread().interrupt();
+        }
+
+        log.info("before update balanceId: {}, balance: {}", balanceId, balance.getBalance());
 
         balance.newBalance(amount);
         balanceRepository.save(balance);
@@ -35,7 +43,7 @@ public class BalanceService {
 
         log.info("getBalanceByBalanceId : {}", balanceId);
 
-        Balance balance = balanceRepository.findById(balanceId)
+        Balance balance = balanceRepository.findByIdWithPessimisticWriteLock(balanceId)
                 .orElseThrow(() -> new CustomException("Balance not found"));
 
         return new BalanceResponseDto(balance.getBalanceId(), balance.getBalance());
