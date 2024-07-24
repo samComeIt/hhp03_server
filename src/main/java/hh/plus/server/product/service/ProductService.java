@@ -10,6 +10,7 @@ import hh.plus.server.product.domain.entity.ProductOption;
 import hh.plus.server.product.domain.repository.ProductOptionRepository;
 import hh.plus.server.product.domain.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -78,6 +80,7 @@ public class ProductService {
     @Transactional(readOnly = true)
     public ProductOption getOptionById(Long productOptionId)
     {
+        log.info("Get Product Option by productOptionId: {}", productOptionId);
         return productOptionRepository.findById(productOptionId)
                 .orElseThrow(() -> new IllegalArgumentException("Product Option not found"));
     }
@@ -85,6 +88,7 @@ public class ProductService {
     @Transactional
     public ProductOptionResponseDto updateStockById(Long productOptionId, Long stock)
     {
+        log.info("Decrease {} stock(s) by productOptionId: {},", stock, productOptionId);
         ProductOption productOption = productOptionRepository.findById(productOptionId)
                 .orElseThrow(() -> new IllegalArgumentException("Product option not found"));
 

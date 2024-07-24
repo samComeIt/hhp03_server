@@ -19,7 +19,7 @@ public class BalanceService {
     @Transactional
     public BalanceResponseDto updateBalance(Long balanceId, Long amount)
     {
-        log.info("updateBalance : {}, {}", balanceId, amount);
+        log.info("updateBalance balanceId: {}, balance: {}", balanceId, amount);
 
         Balance balance = balanceRepository.findById(balanceId)
                 .orElseThrow(() -> new CustomException("Balance not found"));
