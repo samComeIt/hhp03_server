@@ -11,12 +11,12 @@ import hh.plus.server.payment.service.PaymentService;
 import org.apache.catalina.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.logging.Logger;
-import org.junit.platform.commons.logging.LoggerFactory;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,8 +33,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class BalancePessimisticLockTest {
-
-    private static final Logger log = LoggerFactory.getLogger(BalancePessimisticLockTest.class);
 
     @Mock
     private BalanceRepository balanceRepository;
@@ -58,7 +56,7 @@ public class BalancePessimisticLockTest {
 
         when(balanceRepository.findByIdWithPessimisticWriteLock(balanceId)).thenReturn(Optional.of(balance));
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             runConcurrentChargeOperations(balanceId);
         }
 
@@ -66,10 +64,10 @@ public class BalancePessimisticLockTest {
 
         Balance finalBalance = balanceRepository.findByIdWithPessimisticWriteLock(balanceId).orElseThrow();
 
-        assertEquals(1200L, finalBalance.getBalance());
+        assertEquals(2200L, finalBalance.getBalance());
 
-        verify(balanceRepository, times(11)).findByIdWithPessimisticWriteLock(balanceId);
-        verify(balanceRepository, times(10)).save(any(Balance.class));
+        verify(balanceRepository, times(21)).findByIdWithPessimisticWriteLock(balanceId);
+        verify(balanceRepository, times(20)).save(any(Balance.class));
 
     }
 
