@@ -2,16 +2,15 @@ Task 11 & 12
 - 비관적 락(Pessimistic Lock) 적용 시도
 
 단위 테스트
-- BalancePessimisticLockTest
-  ![img/PessimisticLockTest01.png](PessimisticLockTest01.png)
+- BalancePessimisticLockTest (2sec 650ms)
+  ![img/PessimisticLockTest01.png](img/PessimisticLockTest01.png)
 
-- ProductPessimisticLockTest
-  ![img/PessimisticLockTest02.png](PessimisticLockTest02.png)
-
+- ProductPessimisticLockTest (567ms)
+  ![img/PessimisticLockTest02.png](img/PessimisticLockTest02.png)
 
 통합 테스트
-- OrderFacadeTest
-  ![img/PessimisticLockTest03.png](PessimisticLockTest03.png)
+- OrderFacadeTest (143ms)
+  ![img/PessimisticLockTest03.png](img/PessimisticLockTest03.png)
 
 
 ------------
