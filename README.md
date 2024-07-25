@@ -22,6 +22,8 @@ Task 11 & 12
 
 [비관적 락 PR](https://github.com/samComeIt/hhp03_server/pull/29)
 
+[Redis s-lock PR](https://github.com/samComeIt/hhp03_server/pull/28)
+
 ----------------
 
 Task 5 시나리오 분석 및 작업 계획
