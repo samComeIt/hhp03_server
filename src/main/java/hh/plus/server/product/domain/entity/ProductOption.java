@@ -46,7 +46,6 @@ public class ProductOption {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Version
     private Long version; // for optimistic locking
 
     @Builder

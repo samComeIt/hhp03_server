@@ -111,6 +111,8 @@ public class OrderFacade {
 
         if (balance.balance() < totalPrice) throw new CustomException("Not enough balance");
 
+        balanceService.updateBalance(balance.balanceId(), -totalPrice);
+
         for(OrderItemCreateRequestDto orderItemRequest : orderCreateRequestDto.orderItemCreateRequestDto()) {
             Long productOptionId = orderItemRequest.productOptionId();
             Long quantity = orderItemRequest.quantity();

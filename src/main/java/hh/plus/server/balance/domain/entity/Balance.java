@@ -21,7 +21,6 @@ public class Balance {
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
 
-    @Version
     private Long version; // for optimistic locking
 
     @Builder

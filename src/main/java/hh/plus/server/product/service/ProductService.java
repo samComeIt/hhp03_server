@@ -85,7 +85,7 @@ public class ProductService {
                 .orElseThrow(() -> new IllegalArgumentException("Product Option not found"));
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public ProductOptionResponseDto updateStockById(Long productOptionId, Long stock)
     {
         log.info("Decrease {} stock(s) by productOptionId: {},", stock, productOptionId);

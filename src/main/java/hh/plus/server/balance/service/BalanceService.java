@@ -16,7 +16,7 @@ public class BalanceService {
 
     private final BalanceRepository balanceRepository;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public BalanceResponseDto updateBalance(Long balanceId, Long amount)
     {
         log.info("updateBalance balanceId: {}, balance: {}", balanceId, amount);
