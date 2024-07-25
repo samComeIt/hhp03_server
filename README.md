@@ -1,3 +1,8 @@
+Task 11 
+- Redis s-lock 적용 시도
+- BalanaceServiceTest 작성은 했지만 미작동
+
+
 Task 5 시나리오 분석 및 작업 계획
 
 [프로젝트 Milestone](https://github.com/users/samComeIt/projects/2)
