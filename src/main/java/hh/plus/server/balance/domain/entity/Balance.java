@@ -21,8 +21,6 @@ public class Balance {
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
 
-    private Long version; // for optimistic locking
-
     @Builder
     public Balance(Long balanceId, Long balance, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.balanceId = balanceId;

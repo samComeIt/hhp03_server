@@ -45,9 +45,6 @@ public class ProductOption {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-
-    private Long version; // for optimistic locking
-
     @Builder
     public ProductOption(String name, Status status, Long stock, Long price, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.name = name;
