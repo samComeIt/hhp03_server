@@ -89,7 +89,7 @@ public class ProductService {
     public ProductOptionResponseDto updateStockById(Long productOptionId, Long stock)
     {
         log.info("Decrease {} stock(s) by productOptionId: {},", stock, productOptionId);
-        ProductOption productOption = productOptionRepository.findByIdWithPessimisticWriteLock(productOptionId)
+        ProductOption productOption = productOptionRepository.findById(productOptionId)
                 .orElseThrow(() -> new IllegalArgumentException("Product option not found"));
 
         log.info("Current {} stock(s) by productOptionId: {},", productOption.getStock(), productOptionId);

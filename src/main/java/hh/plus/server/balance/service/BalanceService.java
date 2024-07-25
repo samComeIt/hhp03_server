@@ -21,7 +21,7 @@ public class BalanceService {
     {
         log.info("updateBalance balanceId: {}, balance: {}", balanceId, amount);
 
-        Balance balance = balanceRepository.findByIdWithPessimisticWriteLock(balanceId)
+        Balance balance = balanceRepository.findById(balanceId)
                 .orElseThrow(() -> new CustomException("Balance not found"));
 
         try {
