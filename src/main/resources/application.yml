@@ -2,3 +2,13 @@ logging:
   slack:
     webhook-uri: https://hooks.slack.com/services/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
   config: classpath:logback-slack.xml
+
+jpa:
+  open-in-view: false
+  hibernate:
+    ddl-auto: create // spring.jpa.ddl-auto 를 통해 설정 가능
+  properties:
+    hibernate:
+      show_sql: true
+      format_sql: true
+  defer-datasource-initialization: true

@@ -1,3 +1,20 @@
+Task 11 & 12
+- 비관적 락(Pessimistic Lock) 적용 시도
+
+단위 테스트
+- BalancePessimisticLockTest (2sec 650ms)
+  ![img/PessimisticLockTest01.png](img/PessimisticLockTest01.png)
+
+- ProductPessimisticLockTest (567ms)
+  ![img/PessimisticLockTest02.png](img/PessimisticLockTest02.png)
+
+통합 테스트
+- OrderFacadeTest (143ms)
+  ![img/PessimisticLockTest03.png](img/PessimisticLockTest03.png)
+
+
+------------
+
 Task 5 시나리오 분석 및 작업 계획
 
 [프로젝트 Milestone](https://github.com/users/samComeIt/projects/2)
