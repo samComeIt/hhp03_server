@@ -10,8 +10,9 @@ Task 11 & 12
   ![img/OptimissticLockTest02.png](img/OptimissticLockTest02.png)
 
 통합 테스트
-- OrderFacadeOptimisticLockTest (143ms)
+- OrderFacadeOptimisticLockTest (140ms)
   ![img/OptimissticLockTest03.png](img/OptimissticLockTest03.png)
+----------------
 
 Task 5 시나리오 분석 및 작업 계획
 
