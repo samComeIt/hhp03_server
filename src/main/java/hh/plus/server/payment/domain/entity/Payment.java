@@ -3,6 +3,7 @@ package hh.plus.server.payment.domain.entity;
 import hh.plus.server.payment.domain.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
+import org.springframework.data.redis.core.RedisHash;
 
 import java.time.LocalDateTime;
 

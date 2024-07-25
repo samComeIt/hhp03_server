@@ -14,9 +14,6 @@ public class BalanceRepositoryImpl implements BalanceRepository {
 
     private final BalanceJpaRepository balanceJpaRepository;
 
-     @Override
-    public Optional<Balance> findByIdWithPessimisticWriteLock(Long balanceId) {return balanceJpaRepository.findById(balanceId);}
-
     @Override
     public Optional<Balance> findById(Long balanceId) {return balanceJpaRepository.findById(balanceId);}
 

@@ -10,8 +10,6 @@ import java.util.Optional;
 
 public interface BalanceRepository {
 
-    Optional<Balance> findByIdWithPessimisticWriteLock(Long balanceId);
-
     Optional<Balance> findById(Long balanceId);
 
     Balance save(Balance balance);

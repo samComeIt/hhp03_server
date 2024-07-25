@@ -3,6 +3,7 @@ package hh.plus.server.cart.domain.entity;
 import hh.plus.server.order.domain.entity.Order;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
+import org.springframework.data.redis.core.RedisHash;
 
 import java.time.LocalDateTime;
 

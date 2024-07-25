@@ -14,11 +14,6 @@ public class ProductOptionRepositoryImpl implements ProductOptionRepository {
     private final ProductOptionJpaRepository productOptionJpaRepository;
 
     @Override
-    public Optional<ProductOption> findByIdWithPessimisticWriteLock(Long optionId) {
-        return productOptionJpaRepository.findByIdWithPessimisticWriteLock(optionId);
-    }
-
-    @Override
     public Optional<ProductOption> findById(Long productOptionId) {
         return productOptionJpaRepository.findById(productOptionId);}
 
