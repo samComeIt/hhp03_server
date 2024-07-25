@@ -5,10 +5,11 @@ import hh.plus.server.cart.domain.entity.Cart02;
 import hh.plus.server.cart.service.dto.CartDto;
 import hh.plus.server.cart.service.dto.CreateCartDto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface CartJpaRepository extends JpaRepository<Cart02, Long> {
+public interface CartJpaRepository extends CrudRepository<Cart02, Long> {
     //Optional<Cart> findById(Long cartId);
     Optional<Cart02> findById(Long cartId);
 

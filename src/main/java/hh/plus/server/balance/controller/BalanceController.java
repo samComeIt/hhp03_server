@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,6 +58,16 @@ public class BalanceController {
         log.info("Controller updateBalance : {}, {}", balanceId, amount);
         BalanceResponseDto balanceResponseDto = balanceService.updateBalance(balanceId, amount);
         return ResponseEntity.ok(balanceResponseDto);
+    }
+
+    @PostMapping("/{balanceId}/update")
+    public ResponseEntity<String> updateBalanceWithLock(@PathVariable Long balanceId, @RequestBody Long amountToUpdate) {
+        try {
+            balanceService.updateBalanceWithLock(balanceId, amountToUpdate);
+            return ResponseEntity.ok("Balance updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update balance: " + e.getMessage());
+        }
     }
 
 }

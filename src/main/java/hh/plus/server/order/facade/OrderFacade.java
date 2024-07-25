@@ -20,6 +20,7 @@ import hh.plus.server.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -36,15 +37,6 @@ public class OrderFacade {
     private final PaymentRepository paymentRepository;
 
     public Order createOrder(OrderCreateRequestDto orderCreateRequestDto) {
-
-        try {
-
-        } catch (Exception e){
-
-        } finally {
-
-        }
-
         BalanceResponseDto balance = balanceService.getBalanceByBalanceId(orderCreateRequestDto.balanceId());
         Long totalPrice = calculateTotalPrice(orderCreateRequestDto);
 
@@ -68,6 +60,7 @@ public class OrderFacade {
                 .sum();
     }
 
+    @Transactional
     public Order createOrderEntity(OrderCreateRequestDto orderCreateRequestDto) {
         Order order = new Order();
 
@@ -94,6 +87,7 @@ public class OrderFacade {
         }
 
         orderRepository.save(order);
+        log.info("Order created : {}", order);
         return order;
     }
 
@@ -108,6 +102,7 @@ public class OrderFacade {
                 LocalDateTime.now()
         );
 
+        log.info("Create Payment : {}", payment);
         paymentRepository.save(payment);
         return payment;
     }
@@ -115,6 +110,8 @@ public class OrderFacade {
     public void processPayment(OrderCreateRequestDto orderCreateRequestDto, Order order, Payment payment, Long totalPrice, BalanceResponseDto balance) {
 
         if (balance.balance() < totalPrice) throw new CustomException("Not enough balance");
+
+        balanceService.updateBalance(balance.balanceId(), -totalPrice);
 
         for(OrderItemCreateRequestDto orderItemRequest : orderCreateRequestDto.orderItemCreateRequestDto()) {
             Long productOptionId = orderItemRequest.productOptionId();

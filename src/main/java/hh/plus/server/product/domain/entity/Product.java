@@ -5,6 +5,7 @@ import hh.plus.server.product.domain.Status;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.springframework.data.redis.core.RedisHash;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -40,6 +41,14 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<ProductOption> productOption = new ArrayList<>();
+
+    @Builder
+    public Product(String name, Status status, Boolean isDeleted, LocalDateTime createdAt) {
+        this.name = name;
+        this.status = status;
+        this.isDeleted = isDeleted;
+        this.createdAt = createdAt;
+    }
 
     public Product(String name, Status status, Long orderCnt, Boolean isDeleted, LocalDateTime createdAt, List<ProductOption> productOption) {
         this.name = name;

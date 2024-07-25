@@ -7,8 +7,6 @@ import hh.plus.server.balance.service.BalanceService;
 import hh.plus.server.product.domain.entity.Product;
 import hh.plus.server.product.domain.entity.ProductOption;
 import hh.plus.server.product.domain.repository.ProductRepository;
-import hh.plus.server.product.service.ProductOptionService;
-import hh.plus.server.product.service.ProductService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,8 +30,6 @@ public class ProductServiceTest {
 
     @InjectMocks
     private ProductService productService;
-    @InjectMocks
-    private ProductOptionService productOptionService;
 
     @Mock
     private ProductRepository productRepository;

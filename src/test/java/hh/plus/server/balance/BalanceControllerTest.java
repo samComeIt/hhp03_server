@@ -41,7 +41,6 @@ public class BalanceControllerTest {
 
         when(balanceService.getBalanceByBalanceId(balanceId).balance()).thenReturn(balance.getBalance());
 
-
         mockMvc.perform(get("/api/balance/{balanceId}", balanceId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -49,6 +48,8 @@ public class BalanceControllerTest {
                 .andExpect(jsonPath("$.balance").value(200));
 
     }
+
+
 
 
 }
