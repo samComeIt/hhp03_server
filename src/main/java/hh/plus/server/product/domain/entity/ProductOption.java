@@ -3,6 +3,7 @@ package hh.plus.server.product.domain.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import hh.plus.server.product.domain.Status;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -44,6 +45,19 @@ public class ProductOption {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @Version
+    private Long version; // for optimistic locking
+
+    @Builder
+    public ProductOption(String name, Status status, Long stock, Long price, LocalDateTime updatedAt, LocalDateTime createdAt) {
+        this.name = name;
+        this.status = status;
+        this.stock = stock;
+        this.price = price;
+        this.updatedAt = updatedAt;
+        this.createdAt = createdAt;
+    }
 
     public ProductOption(Product product, String name, Status status, Long orderCnt, Long stock, Long price, String isDeleted, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.product = product;
