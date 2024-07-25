@@ -1,3 +1,18 @@
+Task 11 & 12
+
+낙관적 락(Optimisstic Lock) 적용 시도
+
+단위 테스트
+- BalanceOptimisticLockTest (633ms)
+  ![img/OptimissticLockTest01.png](img/OptimissticLockTest01.png)
+
+- ProductOptimisticLockTest (573ms)
+  ![img/OptimissticLockTest02.png](img/OptimissticLockTest02.png)
+
+통합 테스트
+- OrderFacadeOptimisticLockTest (143ms)
+  ![img/OptimissticLockTest03.png](img/OptimissticLockTest03.png)
+
 Task 5 시나리오 분석 및 작업 계획
 
 [프로젝트 Milestone](https://github.com/users/samComeIt/projects/2)
