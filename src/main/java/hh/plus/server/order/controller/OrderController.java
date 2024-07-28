@@ -1,8 +1,8 @@
 package hh.plus.server.order.controller;
 
-import hh.plus.server.order.controller.dto.OrderCreateRequestDto;
-import hh.plus.server.order.controller.dto.OrderCreateResponseDto;
-import hh.plus.server.order.controller.dto.OrderResponseDto;
+import hh.plus.server.order.domain.OrderStatus;
+import hh.plus.server.order.domain.entity.Order;
+import hh.plus.server.order.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -10,14 +10,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-
 @RestController
 @Tag(name = "Order API")
 @RequestMapping("/api/order")
 @RequiredArgsConstructor
 public class OrderController {
-
+    private final OrderService orderService;
     /**
      * 주문 조회
      * @param orderId
@@ -29,7 +27,7 @@ public class OrderController {
             @ApiResponse(responseCode = "404", description = "Not found - The order does not exist"),
     })
     @GetMapping("/{orderId}")
-    public OrderResponseDto getOrder(@PathVariable long orderId){ return OrderResponseDto.response(orderId, Arrays.asList(100L, 101L));}
+    public Order getOrder(@PathVariable long orderId){ return orderService.getOrderById(orderId);}
 
     /**
      * 주문 생성
@@ -42,8 +40,8 @@ public class OrderController {
             @ApiResponse(responseCode = "404", description = "Not found - Missing data from request body"),
     })
     @PostMapping("/create")
-    public OrderCreateResponseDto createOrder(@RequestBody OrderCreateRequestDto orderCreateRequestDto) {
-        return OrderCreateResponseDto.response(100L, Arrays.asList(200L, 201L, 202L));}
+    public Order createOrder(@RequestBody Order order) {
+        return orderService.createOrder(order); }
 
     @Operation(summary = "Update order status", description = "Update an order")
     @ApiResponses(value = {
@@ -51,6 +49,6 @@ public class OrderController {
             @ApiResponse(responseCode = "404", description = "Not found - Missing data from request body"),
     })
     @PatchMapping("/{order_id}")
-    public OrderResponseDto updateOrder(@PathVariable long orderId, @RequestBody String status) {
-        return OrderResponseDto.response(orderId, Arrays.asList(100L, 101L)); }
+    public Order updateOrder(@PathVariable long orderId, @RequestBody OrderStatus status) {
+        return orderService.updateOrder(orderId, status); }
 }

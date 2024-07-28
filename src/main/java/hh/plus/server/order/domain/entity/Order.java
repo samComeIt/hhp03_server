@@ -2,8 +2,7 @@ package hh.plus.server.order.domain.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import hh.plus.server.payment.domain.entity.Payment;
-import hh.plus.server.product.domain.entity.ProductOption;
+import hh.plus.server.order.domain.OrderStatus;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
@@ -21,7 +20,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-    private String status;
+    private OrderStatus status;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
@@ -30,8 +29,7 @@ public class Order {
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
 
-    public Order(Long orderId, String status, List<OrderDetail> orderDetail, LocalDateTime updatedAt, LocalDateTime createdAt) {
-        this.orderId = orderId;
+    public Order(OrderStatus status, List<OrderDetail> orderDetail, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.status = status;
         this.orderDetail = orderDetail;
         this.updatedAt = updatedAt;
@@ -46,11 +44,11 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public String getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
@@ -76,5 +74,10 @@ public class Order {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public void updateStatus(OrderStatus newStatus)
+    {
+        this.status = newStatus;
     }
 }

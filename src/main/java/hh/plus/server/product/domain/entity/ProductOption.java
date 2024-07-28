@@ -131,13 +131,13 @@ public class ProductOption {
     {
         if(this.stock - stock < 0) throw new RuntimeException("Cannot be minus");
 
-        this.setStock(this.stock - stock);
+        this.stock -= stock;
     }
 
     public void plusStock(Long stock)
     {
         if(this.stock + stock < 0) throw new RuntimeException("Cannot be minus");
 
-        this.setStock(this.stock + stock);
+        this.stock += stock;
     }
 }

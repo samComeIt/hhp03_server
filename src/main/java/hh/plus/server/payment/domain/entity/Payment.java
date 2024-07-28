@@ -1,6 +1,6 @@
 package hh.plus.server.payment.domain.entity;
 
-import hh.plus.server.order.domain.entity.Order;
+import hh.plus.server.payment.domain.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
@@ -18,13 +18,12 @@ public class Payment {
     private Long orderId;
     private String type;
     private String methodType;
-    private String status;
+    private PaymentStatus status;
     private Long amount;
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
 
-    public Payment(Long paymentId, Long orderId, String type, String methodType, String status, Long amount, LocalDateTime updatedAt, LocalDateTime createdAt) {
-        this.paymentId = paymentId;
+    public Payment(Long orderId, String type, String methodType, PaymentStatus status, Long amount, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.orderId = orderId;
         this.type = type;
         this.methodType = methodType;
@@ -66,11 +65,11 @@ public class Payment {
         this.methodType = methodType;
     }
 
-    public String getStatus() {
+    public PaymentStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(PaymentStatus status) {
         this.status = status;
     }
 
@@ -96,5 +95,10 @@ public class Payment {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public void updateStatus(PaymentStatus newStatus)
+    {
+        this.status = newStatus;
     }
 }

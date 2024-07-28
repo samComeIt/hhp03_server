@@ -1,15 +1,16 @@
 package hh.plus.server.balance.controller;
 
-import hh.plus.server.balance.controller.dto.BalanceDto;
-import hh.plus.server.balance.controller.dto.BalanceResponseDto;
-import hh.plus.server.balance.domain.entity.Balance;
+import hh.plus.server.balance.service.dto.BalanceResponseDto;
 import hh.plus.server.balance.service.BalanceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.persistence.Table;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,6 +18,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/balance")
 @RequiredArgsConstructor
 public class BalanceController {
+
+
+    private static final Logger log = LoggerFactory.getLogger(BalanceController.class);
+
     private final BalanceService balanceService;
 
     /**
@@ -30,8 +35,10 @@ public class BalanceController {
             @ApiResponse(responseCode = "404", description = "Not found - The balance does not exist"),
     })
     @GetMapping("/{balanceId}")
-    public BalanceResponseDto getBalance(@PathVariable long balanceId){
-        return balanceService.getBalanceByBalanceId(balanceId);
+    public ResponseEntity<BalanceResponseDto> getBalance(@PathVariable long balanceId){
+        log.info("Controller getBalanceByBalanceId : {}", balanceId);
+        BalanceResponseDto balanceResponseDto = balanceService.getBalanceByBalanceId(balanceId);
+        return ResponseEntity.ok(balanceResponseDto);
     }
 
     /**
@@ -46,7 +53,10 @@ public class BalanceController {
             @ApiResponse(responseCode = "404", description = "Not found - The balance does not exist")
     })
     @PatchMapping("/{balanceId}")
-    public BalanceResponseDto updateBalance(@PathVariable long balanceId, @RequestBody long amount){
-        return balanceService.updateBalance(balanceId, amount);
+    public ResponseEntity<BalanceResponseDto> updateBalance(@PathVariable long balanceId, @RequestBody long amount){
+        log.info("Controller updateBalance : {}, {}", balanceId, amount);
+        BalanceResponseDto balanceResponseDto = balanceService.updateBalance(balanceId, amount);
+        return ResponseEntity.ok(balanceResponseDto);
     }
+
 }

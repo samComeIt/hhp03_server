@@ -22,9 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureMockMvc
 public class BalanceIntegrationTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
     @InjectMocks
     private BalanceService balanceService;
 

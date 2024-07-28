@@ -1,16 +1,15 @@
 package hh.plus.server.balance.service;
 
-import hh.plus.server.balance.controller.dto.BalanceResponseDto;
+import hh.plus.server.balance.service.dto.BalanceResponseDto;
 import hh.plus.server.balance.domain.entity.Balance;
 import hh.plus.server.balance.domain.repository.BalanceRepository;
-import jakarta.transaction.Transactional;
+import hh.plus.server.common.exception.CustomException;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BalanceService {
@@ -20,30 +19,26 @@ public class BalanceService {
     @Transactional
     public BalanceResponseDto updateBalance(Long balanceId, Long amount)
     {
-        Optional<Balance> optionalBalance = balanceRepository.findById(balanceId);
+        log.info("updateBalance : {}, {}", balanceId, amount);
 
-        if (optionalBalance.isEmpty()) throw new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "balanceId does not exist"
-        );
+        Balance balance = balanceRepository.findById(balanceId)
+                .orElseThrow(() -> new CustomException("Balance not found"));
 
-        Balance balance = optionalBalance.get();
         balance.newBalance(amount);
         balanceRepository.save(balance);
 
         return new BalanceResponseDto(balance.getBalanceId(), balance.getBalance());
     }
 
+    @Transactional(readOnly = true)
     public BalanceResponseDto getBalanceByBalanceId(Long balanceId) {
 
-        Optional<Balance> optionalBalance = balanceRepository.findById(balanceId);
+        log.info("getBalanceByBalanceId : {}", balanceId);
 
-        if (optionalBalance.isEmpty()) throw new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "balanceId does not exist"
-        );
+        Balance balance = balanceRepository.findById(balanceId)
+                .orElseThrow(() -> new CustomException("Balance not found"));
 
-        Balance balance = optionalBalance.get();
         return new BalanceResponseDto(balance.getBalanceId(), balance.getBalance());
-
     }
 
 }
