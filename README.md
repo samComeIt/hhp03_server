@@ -6,14 +6,15 @@ Task 5 시나리오 분석 및 작업 계획
 
 
 ![sequenceDiagram/balance/PatchPointAPI.png](sequenceDiagram/balance/PatchPointAPI.png)
-![sequenceDiagram/order/PostOrderAPI.png](sequenceDiagram/order/PostOrderAPI.png)
+![sequenceDiagram/order/PostOrderAPI.png](sequenceDiagram/order/OrderProcess.png)
 
 시퀀스 다이어그램 더 보기(상품/주문/잔액 조회 등)
 - [상품 조회](sequenceDiagram/product/GetProductAPI.png)
 - [상품 상세 조회](sequenceDiagram/product/GetProductDetailAPI.png)
 - [상위 상품 목록 조회](sequenceDiagram/product/GetProductListAPI.png)
 - [주문 조회](sequenceDiagram/order/GetOrderAPI.png)
-- [주문 결제](sequenceDiagram/order/PostOrderAPI.png)
+- [주문 생성](sequenceDiagram/order/PostOrderAPI02.png)
+- [결제 생성](sequenceDiagram/payment/PostPaymentAPI.png)
 - [잔액 조회](sequenceDiagram/balance/GetBalanceAPI.png)
 - [잔액 충전](sequenceDiagram/balance/PatchPointAPI.png)
 
@@ -24,3 +25,6 @@ Taks 6 시나리오 설계 자료 제출
 
 API 명세
 ![API_Spec.png](API_Spec.png)
+
+Swagger UI
+![SwaggerUI.png](SwaggerUI.png)

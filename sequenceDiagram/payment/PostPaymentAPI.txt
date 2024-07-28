@@ -1,0 +1,16 @@
+title 결제 API
+
+Actor->POST /api/payment/{order_id}: 결제 요청
+POST /api/payment/{order_id}->Payment: 결제 정보 생성
+
+
+Payment<->Balance: 잔액 조회 요청
+
+opt case 잔액 부족
+Balance-->Actor: 잔액 부족으로 끝
+end
+
+
+Payment<->Payment: 결제 정보 상태 값 업데이트
+
+Payment-->Actor: 결제 정보 반환
