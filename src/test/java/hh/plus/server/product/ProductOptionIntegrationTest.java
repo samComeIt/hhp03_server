@@ -5,7 +5,6 @@ import hh.plus.server.product.domain.entity.Product;
 import hh.plus.server.product.domain.entity.ProductOption;
 import hh.plus.server.product.domain.repository.ProductOptionRepository;
 import hh.plus.server.product.domain.repository.ProductRepository;
-import hh.plus.server.product.service.ProductOptionService;
 import hh.plus.server.product.service.ProductService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
@@ -27,8 +26,6 @@ public class ProductOptionIntegrationTest {
 
     @InjectMocks
     private ProductService productService;
-    @InjectMocks
-    private ProductOptionService productOptionService;
 
     @Autowired
     private ProductOptionRepository productOptionRepository;
@@ -48,18 +45,18 @@ public class ProductOptionIntegrationTest {
         Product mockProduct = optionalProduct.get();
 
         //given
-        ProductOption productOption = new ProductOption(productOptionId, mockProduct, "상품옵션1", "ACTIVE", 101L, 5L, "false", LocalDateTime.now(), LocalDateTime.now());
+        //ProductOption productOption = new ProductOption(productOptionId, mockProduct, "상품옵션1", "ACTIVE", 101L, 5L, "false", LocalDateTime.now(), LocalDateTime.now());
 
         //when
         CompletableFuture.allOf(
                 CompletableFuture.runAsync(() -> {
-                    productOptionService.updateStockById(productOptionId, 3L);
+                    productService.updateStockById(productOptionId, 3L);
                 }),
                 CompletableFuture.runAsync(() -> {
-                    productOptionService.updateStockById(productOptionId, 2L);
+                    productService.updateStockById(productOptionId, 2L);
                 }),
                 CompletableFuture.runAsync(() -> {
-                    productOptionService.updateStockById(productOptionId, 5L);
+                    productService.updateStockById(productOptionId, 5L);
                 })
         ).join();
 

@@ -36,15 +36,6 @@ public class OrderFacade {
     private final PaymentRepository paymentRepository;
 
     public Order createOrder(OrderCreateRequestDto orderCreateRequestDto) {
-
-        try {
-
-        } catch (Exception e){
-
-        } finally {
-
-        }
-
         BalanceResponseDto balance = balanceService.getBalanceByBalanceId(orderCreateRequestDto.balanceId());
         Long totalPrice = calculateTotalPrice(orderCreateRequestDto);
 
@@ -55,7 +46,6 @@ public class OrderFacade {
         // create payment
         // update product stock, balance
         // delete cart, orderSheet
-
         processPayment(orderCreateRequestDto, order, payment, totalPrice, balance);
         deleteCartItem(orderCreateRequestDto);
 
