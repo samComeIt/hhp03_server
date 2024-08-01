@@ -11,6 +11,8 @@ import hh.plus.server.product.domain.repository.ProductOptionRepository;
 import hh.plus.server.product.domain.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -74,12 +76,14 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "popularProductsCache", key = "'popularProducts'")
     public List<Product> getTopSoldProduct(LocalDate startDate, LocalDate endDate)
     {
         return orderDetailRepository.findTopSoldProduct(startDate, endDate);
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "stockCache", key = "#id")
     public ProductOption getOptionById(Long productOptionId)
     {
         log.info("Get Product Option by productOptionId: {}", productOptionId);
@@ -88,6 +92,7 @@ public class ProductService {
     }
 
     @Transactional
+    @CacheEvict(value = "stockCache", key = "#stock.id")
     public ProductOptionResponseDto updateStockById(Long productOptionId, Long stock)
     {
         log.info("Decrease {} stock(s) by productOptionId: {},", stock, productOptionId);

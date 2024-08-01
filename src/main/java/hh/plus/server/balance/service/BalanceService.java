@@ -31,7 +31,6 @@ public class BalanceService {
         return new BalanceResponseDto(balance.getBalanceId(), balance.getBalance());
     }
 
-    @Cacheable(value = "myBalance", key = "#balanceId")
     public BalanceResponseDto getBalanceByBalanceId(Long balanceId) {
 
         log.info("getBalanceByBalanceId : {}", balanceId);
