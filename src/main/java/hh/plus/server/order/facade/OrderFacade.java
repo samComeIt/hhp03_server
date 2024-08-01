@@ -36,15 +36,6 @@ public class OrderFacade {
     private final PaymentRepository paymentRepository;
 
     public Order createOrder(OrderCreateRequestDto orderCreateRequestDto) {
-
-        try {
-
-        } catch (Exception e){
-
-        } finally {
-
-        }
-
         BalanceResponseDto balance = balanceService.getBalanceByBalanceId(orderCreateRequestDto.balanceId());
         Long totalPrice = calculateTotalPrice(orderCreateRequestDto);
 

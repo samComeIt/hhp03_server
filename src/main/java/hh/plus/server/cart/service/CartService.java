@@ -11,6 +11,8 @@ import hh.plus.server.product.domain.entity.Product;
 import hh.plus.server.product.domain.entity.ProductOption;
 import hh.plus.server.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -33,6 +35,7 @@ public class CartService {
 //                .map(cartDtoMapper).collect(Collectors.toList());
 //    }
 
+    @Cacheable(value = "cartCache", key = "#userId")
     public Cart02Dto getCart02ById(Long cartId) {
         Cart02 cart02 = cartRepository.findById(cartId)
                 .orElseThrow(()-> new CustomException("Cart not found"));
@@ -74,6 +77,7 @@ public class CartService {
         return cartRepository.save(cart02);
     }
 
+    @CacheEvict(value = "cartCache", key = "#userId")
     public void deleteCart(Long cartId)
     {
         cartRepository.deleteById(cartId);

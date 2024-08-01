@@ -24,6 +24,8 @@ import hh.plus.server.product.domain.entity.ProductOption;
 import hh.plus.server.product.service.ProductService;
 import hh.plus.server.product.service.dto.ProductDto;
 import org.aspectj.weaver.ast.Or;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -132,6 +134,7 @@ public class OrderService {
     }
 
     @Transactional
+    @CacheEvict(value = "orderCache", key = "#orderId")
     public Order updateOrder(Long orderId, OrderStatus status)
     {
         Order order = orderRepository.findById(orderId)
@@ -141,6 +144,7 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "orderCache", key = "#orderId")
     public Order getOrderById(Long orderId)
     {
         Order order = orderRepository.findById(orderId)
@@ -186,6 +190,7 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "orderSheetCache", key = "#criteria")
     public OrderSheet findOrderSheetById(Long orderSheetId)
     {
         OrderSheet orderSheet = orderSheetRepository.findById(orderSheetId)
@@ -195,6 +200,7 @@ public class OrderService {
     }
 
     @Transactional
+    @CacheEvict(value = "orderSheetCache", key = "#criteria")
     public void deleteOrderSheet(Long orderSheetId)
     {
         OrderSheet orderSheet = orderSheetRepository.findById(orderSheetId)
