@@ -42,10 +42,22 @@ public class RedisConfig {
                 .entryTtl(Duration.ofMinutes(30))  // Specific TTL of 30 minutes for cartCache
                 .disableCachingNullValues();
 
+        // Specific cache configuration for orderCache
+        RedisCacheConfiguration orderCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofMinutes(30))  // Specific TTL of 30 minutes for cartCache
+                .disableCachingNullValues();
+
+        // Specific cache configuration for orderCache
+        RedisCacheConfiguration orderSheetCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofHours(1))  // Specific TTL of 30 minutes for cartCache
+                .disableCachingNullValues();
+
         return RedisCacheManager.builder(redisConnectionFactory)
                 .cacheDefaults(cacheConfig)  // Default configuration
                 .withCacheConfiguration("cartCache", cartCacheConfig)  // Cache configuration for cartCache
                 .withCacheConfiguration("popularProductsCache", popularProductsCacheConfig)  // Cache configuration for popularProductsCache
+                .withCacheConfiguration("orderCache", orderCacheConfig)  // Cache configuration for orderCache
+                .withCacheConfiguration("orderSheetCache", orderSheetCacheConfig)  // Cache configuration for orderSheetCache
                 .build();
     }
 
