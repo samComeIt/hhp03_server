@@ -4,6 +4,8 @@ import hh.plus.server.balance.service.dto.BalanceResponseDto;
 import hh.plus.server.balance.domain.entity.Balance;
 import hh.plus.server.balance.domain.repository.BalanceRepository;
 import hh.plus.server.common.exception.CustomException;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ public class BalanceService {
     private final BalanceRepository balanceRepository;
 
     @Transactional
+    @CacheEvict(value = "myBalance", key = "#balanceId")
     public BalanceResponseDto updateBalance(Long balanceId, Long amount)
     {
         log.info("updateBalance balanceId: {}, balance: {}", balanceId, amount);
@@ -31,6 +34,7 @@ public class BalanceService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "myBalance", key = "#balanceId")
     public BalanceResponseDto getBalanceByBalanceId(Long balanceId) {
 
         log.info("getBalanceByBalanceId : {}", balanceId);

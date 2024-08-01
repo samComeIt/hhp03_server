@@ -41,6 +41,12 @@ public class Product {
     @JsonManagedReference
     private List<ProductOption> productOption = new ArrayList<>();
 
+    @Builder
+    public Product(Long productId, String name, LocalDateTime createdAt) {
+        this.productId = productId;
+        this.name = name;
+        this.createdAt = createdAt;
+    }
     public Product(String name, Status status, Long orderCnt, Boolean isDeleted, LocalDateTime createdAt, List<ProductOption> productOption) {
         this.name = name;
         this.status = status;
