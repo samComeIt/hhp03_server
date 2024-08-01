@@ -32,10 +32,20 @@ public class RedisConfig {
                 .entryTtl(Duration.ofHours(1))  // Set default TTL of 1 hour
                 .disableCachingNullValues();
 
+        // Specific cache configuration for popularProductsCache
+        RedisCacheConfiguration popularProductsCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofHours(2))  // Specific TTL of 2 hours for popularProductsCache
+                .disableCachingNullValues();
+
+        // Specific cache configuration for cartCache
+        RedisCacheConfiguration cartCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofMinutes(30))  // Specific TTL of 30 minutes for cartCache
+                .disableCachingNullValues();
+
         return RedisCacheManager.builder(redisConnectionFactory)
-                .cacheDefaults(cacheConfig)
-                .withCacheConfiguration("popularProductsCache",
-                        RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(12))) // Specific TTL for popularProductsCache
+                .cacheDefaults(cacheConfig)  // Default configuration
+                .withCacheConfiguration("cartCache", cartCacheConfig)  // Cache configuration for cartCache
+                .withCacheConfiguration("popularProductsCache", popularProductsCacheConfig)  // Cache configuration for popularProductsCache
                 .build();
     }
 
