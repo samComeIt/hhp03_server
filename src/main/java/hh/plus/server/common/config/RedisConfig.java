@@ -34,6 +34,8 @@ public class RedisConfig {
 
         return RedisCacheManager.builder(redisConnectionFactory)
                 .cacheDefaults(cacheConfig)
+                .withCacheConfiguration("popularProductsCache",
+                        RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(12))) // Specific TTL for popularProductsCache
                 .build();
     }
 
