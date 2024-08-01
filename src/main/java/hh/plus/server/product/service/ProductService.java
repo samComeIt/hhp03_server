@@ -11,6 +11,7 @@ import hh.plus.server.product.domain.repository.ProductOptionRepository;
 import hh.plus.server.product.domain.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class ProductService {
     private final OrderDetailRepository orderDetailRepository;
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "product", key = "#productId")
     public Product getProductById(Long productId)
     {
         return productRepository.findById(productId)
