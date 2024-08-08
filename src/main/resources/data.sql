@@ -1,7 +1,9 @@
 CREATE INDEX idx_balance ON BALANCE(balance_id);
 
 CREATE INDEX idx_product ON PRODUCT(product_id);
+CREATE INDEX idx_product_status ON PRODUCT(status);
 CREATE INDEX idx_product_option ON PRODUCT_OPTION(product_option_id);
+CREATE INDEX idx_product_option_status ON PRODUCT_OPTION(status);
 
 CREATE INDEX idx_cart ON CART02(cart_id);
 
@@ -9,9 +11,12 @@ CREATE INDEX idx_order_sheet ON ORDER_SHEET(order_sheet_id);
 CREATE INDEX idx_order_sheet_item ON ORDER_SHEET_ITEM(order_sheet_item_id);
 
 CREATE INDEX idx_order ON "order"(order_id);
+CREATE INDEX idx_order_status ON "order"(status);
 CREATE INDEX idx_order_item ON ORDER_ITEM(order_item_id);
+CREATE INDEX idx_order_item_status ON ORDER_ITEM(status);
 
 CREATE INDEX idx_payment ON PAYMENT(payment_id);
+CREATE INDEX idx_payment_status ON PAYMENT(status);
 
 insert into balance(balance_id, balance)
 values(100, 100000);
