@@ -15,6 +15,7 @@ public interface OrderDetailJpaRepository extends JpaRepository<OrderItem, Long>
             "FROM OrderDetail od" +
             "JOIN od.order o" +
             "WHERE o.createdAt BETWEEN :startDate AND :endDate " +
+            "AND o.status = 1" +
             "GROUP BY od.pid" +
             "ORDER BY SUM(od.totalCnt) DESC", nativeQuery = true)
     List<Product> findTopSoldProduct(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);

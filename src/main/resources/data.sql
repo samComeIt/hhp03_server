@@ -12,6 +12,7 @@ CREATE INDEX idx_order_sheet_item ON ORDER_SHEET_ITEM(order_sheet_item_id);
 
 CREATE INDEX idx_order ON "order"(order_id);
 CREATE INDEX idx_order_status ON "order"(status);
+CREATE INDEX idx_order_updated_at ON "order"(updated_at);
 CREATE INDEX idx_order_item ON ORDER_ITEM(order_item_id);
 CREATE INDEX idx_order_item_status ON ORDER_ITEM(status);
 
