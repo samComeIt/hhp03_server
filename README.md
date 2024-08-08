@@ -1,3 +1,21 @@
+Week 8 Task 15
+
+balance -> id
+orderSheet -> id
+product, product_option -> id
+
+payment -> id to id, status
+order -> id to id, status
+
+> Index 이해X 및 적용전
+> 
+
+> Index 이해 및 적용(개선) 후
+> show explain
+> and before and after query
+
+> 결론
+
 Week 7
 Task 13 
 > 캐시 이해X 및 적용 전

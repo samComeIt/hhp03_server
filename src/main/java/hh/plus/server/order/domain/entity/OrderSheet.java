@@ -10,9 +10,6 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
-@Table(name = "order_sheet", indexes = {
-        @Index(name="idx_order_sheet", columnList = "orderSheetId")
-})
 public class OrderSheet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
