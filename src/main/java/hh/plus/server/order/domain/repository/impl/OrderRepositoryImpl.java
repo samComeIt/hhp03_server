@@ -1,5 +1,6 @@
 package hh.plus.server.order.domain.repository.impl;
 
+import hh.plus.server.order.domain.OrderStatus;
 import hh.plus.server.order.domain.entity.Order;
 import hh.plus.server.order.domain.repository.OrderJpaRepository;
 import hh.plus.server.order.domain.repository.OrderRepository;
@@ -18,4 +19,7 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     @Override
     public Optional<Order> findById(Long orderId) { return orderJpaRepository.findById(orderId);}
+
+    @Override
+    public Optional<Order> findByOrderIdAndStatus(Long orderId, OrderStatus status) { return orderJpaRepository.findByOrderIdAndStatus(orderId, status);}
 }

@@ -1,3 +1,81 @@
+Week 8 Task 15
+
+> Index 이해X 및 적용전
+> ```agsl
+> CREATE INDEX idx_balance ON BALANCE(balance_id);
+> CREATE INDEX idx_product ON PRODUCT(product_id);
+> CREATE INDEX idx_product_option ON PRODUCT_OPTION(product_option_id);
+> CREATE INDEX idx_cart ON CART02(cart_id);
+> CREATE INDEX idx_order_sheet ON ORDER_SHEET(order_sheet_id);
+> CREATE INDEX idx_order_sheet_item ON ORDER_SHEET_ITEM(order_sheet_item_id);
+> CREATE INDEX idx_order ON "order"(order_id);
+> CREATE INDEX idx_order_item ON ORDER_ITEM(order_item_id);
+> CREATE INDEX idx_payment ON PAYMENT(payment_id);
+> ```
+
+> Index 단일 이해 및 적용(개선) 후
+> ```agsl
+> CREATE INDEX idx_balance ON BALANCE(balance_id);
+> CREATE INDEX idx_product ON PRODUCT(product_id);
+> CREATE INDEX idx_product_status ON PRODUCT(status);
+> CREATE INDEX idx_product_option ON PRODUCT_OPTION(product_option_id);
+> CREATE INDEX idx_product_option_status ON PRODUCT_OPTION(status);
+> CREATE INDEX idx_cart ON CART02(cart_id);
+> CREATE INDEX idx_order_sheet ON ORDER_SHEET(order_sheet_id);
+> CREATE INDEX idx_order_sheet_item ON ORDER_SHEET_ITEM(order_sheet_item_id);
+> CREATE INDEX idx_order ON "order"(order_id);
+> CREATE INDEX idx_order_status ON "order"(status);
+> CREATE INDEX idx_order_updated_at ON "order"(updated_at);
+> CREATE INDEX idx_order_item ON ORDER_ITEM(order_item_id);
+> CREATE INDEX idx_order_item_status ON ORDER_ITEM(status);
+> CREATE INDEX idx_payment ON PAYMENT(payment_id);
+> CREATE INDEX idx_payment_status ON PAYMENT(status);
+> ```
+
+> Index 복합 이해 및 적용(개선) 후
+> ````
+> CREATE INDEX idx_balance ON BALANCE(balance_id);
+> CREATE INDEX idx_product ON PRODUCT(product_id);
+> CREATE INDEX idx_product_status ON PRODUCT(status);
+> CREATE INDEX idx_product_option ON PRODUCT_OPTION(product_option_id);
+> CREATE INDEX idx_product_option_status ON PRODUCT_OPTION(status);
+> CREATE INDEX idx_cart ON CART02(cart_id);
+> CREATE INDEX idx_order_sheet ON ORDER_SHEET(order_sheet_id);
+> CREATE INDEX idx_order_sheet_item ON ORDER_SHEET_ITEM(order_sheet_item_id);
+> CREATE INDEX idx_order_status ON "order"(order_id, status);
+> CREATE INDEX idx_order_updated_at ON "order"(updated_at);
+> CREATE INDEX idx_order_item ON ORDER_ITEM(order_item_id);
+> CREATE INDEX idx_order_item_status ON ORDER_ITEM(status);
+> CREATE INDEX idx_payment_status ON PAYMENT(payment_id, status);
+> ````
+
+
+
+> show explain
+> and before and after query
+> 인기상품 
+
+> 결론(단일 인덱스 vs 복합 인덱스)
+> - 현재 주문처리 할때 주문서(order)와 결제서(payment) 데이터 생성하고 상태 업데이트 처리하므로 상태 업데이트 전에 입금완료 상태 전에 입금대기 상태인것을 조회하는 것으로 개선이 된다고 판단됩니다. 
+> - 조회주문 조회 및 인기 상품 조회 같은 경우 주문 입금완료(status)와 입금일(updated_at) 기준으로 수집하므로 복합 인덱스로 적용하는게 적절하다고 판단이 됩니다.
+> - 잔액 조회 
+> - product & product_option, order_sheet & order_sheet_item, order & order_item 데이터 조회를 SQL JOINS 로 변경하면 
+> product_option, order_sheet_item, order_item 복합 인덱스를 변경 할 것 같습니다.
+>   - ````
+>     CREATE INDEX idx_product_option ON PRODUCT_OPTION(product_id, product_option_id);
+>     CREATE INDEX idx_order_sheet_item ON ORDER_SHEET_ITEM(order_sheet_id, order_sheet_item_id);
+>     CREATE INDEX idx_order_item ON ORDER_ITEM(order_id, order_item_id);
+>     ````
+> - 현재 주문 조회 할때 복합 인덱스로 적용을 했지만 미래에 추가 개발을 하면 단일 인텍스 추가 할 가능성이 보입니다.
+>   - 예시) 관리자에서 주문 리스트 조회 및 검색 필터
+> 
+> 
+> - order_item -> complete_date(입금일), refund_apply_date(환불신청일), refund_date(환불일),
+> return_apply(반품신청일), return_date(반품일), exchange_apply_date(교환신청일), exchange_date(교환일) 등 컬럼 추가 단인 인덱스 적용
+>   - 하지만 너무 많은 인덱스이므로 ORDER_ITEM_STATUS_LOG 테이블을 생성하고
+>   CREATE INDEX idx_order_status_log ON ORDER_ITEM_STATUS_LOG (order_id, order_item_id, status, created_at) 복합 인덱스 추가 할 것 같습니다.
+>
+
 Week 7
 Task 13 
 > 캐시 이해X 및 적용 전

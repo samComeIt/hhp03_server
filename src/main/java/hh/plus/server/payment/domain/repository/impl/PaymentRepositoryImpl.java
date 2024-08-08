@@ -1,5 +1,6 @@
 package hh.plus.server.payment.domain.repository.impl;
 
+import hh.plus.server.payment.domain.PaymentStatus;
 import hh.plus.server.payment.domain.entity.Payment;
 import hh.plus.server.payment.domain.repository.PaymentJpaRepository;
 import hh.plus.server.payment.domain.repository.PaymentRepository;
@@ -19,4 +20,8 @@ public class PaymentRepositoryImpl implements PaymentRepository {
 
     @Override
     public Optional<Payment> findById(Long paymentId) { return paymentJpaRepository.findById(paymentId); }
+
+    @Override
+    public Optional<Payment> findByPaymentIdAndStatus(Long paymentId, PaymentStatus status) {
+        return paymentJpaRepository.findByPaymentIdAndStatus(paymentId, status); }
 }
