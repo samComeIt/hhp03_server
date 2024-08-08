@@ -10,6 +10,7 @@ import hh.plus.server.order.domain.entity.Order;
 import hh.plus.server.order.domain.entity.OrderItem;
 import hh.plus.server.order.domain.entity.OrderSheet;
 import hh.plus.server.order.domain.entity.OrderSheetItem;
+import hh.plus.server.order.domain.listener.OrderCreatedEvent;
 import hh.plus.server.order.domain.repository.OrderRepository;
 import hh.plus.server.order.domain.repository.OrderSheetRepository;
 import hh.plus.server.order.service.dto.request.OrderCreateRequestDto;
@@ -26,6 +27,8 @@ import hh.plus.server.product.service.dto.ProductDto;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +48,7 @@ public class OrderService {
     private final BalanceService balanceService;
     private final ProductService productService;
     private final PaymentRepository paymentRepository;
+    private ApplicationEventPublisher eventPublisher;
 
     @Transactional(rollbackFor = Exception.class)
     public Order createOrder(OrderCreateRequestDto orderCreateRequestDto)
@@ -129,6 +133,8 @@ public class OrderService {
 
             cartService.deleteCart(cartId);
         }
+
+        eventPublisher.publishEvent(new OrderCreatedEvent(order.getOrderId()));
 
         return order;
     }
