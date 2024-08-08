@@ -14,11 +14,6 @@ import java.util.Set;
 
 @Entity
 @NoArgsConstructor
-@Table(name = "product", indexes = {
-        @Index(name="idx_product", columnList = "productId"),
-        @Index(name="idx_status", columnList = "status"),
-        @Index(name="idx_is_deleted", columnList = "isDeleted"),
-})
 public class Product implements Serializable {
     private static final long serialVersionUID = 6494678977089006639L;
     @Id

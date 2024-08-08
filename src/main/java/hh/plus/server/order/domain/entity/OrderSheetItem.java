@@ -9,9 +9,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
-@Table(name = "order_sheet_item", indexes = {
-        @Index(name="idx_order_sheet_item", columnList = "orderSheetItemId")
-})
 public class OrderSheetItem {
 
     @Id

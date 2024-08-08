@@ -8,9 +8,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
-@Table(name = "payment", indexes = {
-        @Index(name="idx_payment", columnList = "paymentId")
-})
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

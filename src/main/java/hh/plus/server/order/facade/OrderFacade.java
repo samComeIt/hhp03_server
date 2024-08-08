@@ -20,6 +20,7 @@ import hh.plus.server.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -59,6 +60,7 @@ public class OrderFacade {
                 .sum();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public Order createOrderEntity(OrderCreateRequestDto orderCreateRequestDto) {
         Order order = new Order();
 
@@ -88,6 +90,7 @@ public class OrderFacade {
         return order;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public Payment createPaymentEntity(Order order, Long totalPrice) {
         Payment payment = new Payment(
                 order.getOrderId(),
@@ -103,6 +106,7 @@ public class OrderFacade {
         return payment;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void processPayment(OrderCreateRequestDto orderCreateRequestDto, Order order, Payment payment, Long totalPrice, BalanceResponseDto balance) {
 
         if (balance.balance() < totalPrice) throw new CustomException("Not enough balance");
@@ -123,6 +127,7 @@ public class OrderFacade {
         balanceService.updateBalance(balance.balanceId(), totalPrice);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void deleteCartItem(OrderCreateRequestDto orderCreateRequestDto) {
         for(OrderItemCreateRequestDto orderItemRequest : orderCreateRequestDto.orderItemCreateRequestDto()) {
             Long cartId = orderItemRequest.cartId();

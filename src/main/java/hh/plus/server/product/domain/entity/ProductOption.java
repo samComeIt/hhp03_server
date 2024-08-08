@@ -9,13 +9,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
-@Table(name = "product_option", indexes = {
-        @Index(name="idx_product_option", columnList = "productOptionId"),
-        @Index(name="idx_pid", columnList = "productId"),
-        @Index(name="idx_pstatus", columnList = "status"),
-        @Index(name="idx_stock", columnList = "stock"),
-        @Index(name="idx_p_is_deleted", columnList = "isDeleted"),
-})
 public class ProductOption {
 
     @Id
