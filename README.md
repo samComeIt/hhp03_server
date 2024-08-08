@@ -13,52 +13,81 @@ Week 8 Task 15
 > CREATE INDEX idx_payment ON PAYMENT(payment_id);
 > ```
 
-> Index 단일 이해 및 적용(개선) 후
+> 단일 Index 이해 및 적용(개선) 후
 > ```agsl
-> CREATE INDEX idx_balance ON BALANCE(balance_id);
-> CREATE INDEX idx_product ON PRODUCT(product_id);
 > CREATE INDEX idx_product_status ON PRODUCT(status);
-> CREATE INDEX idx_product_option ON PRODUCT_OPTION(product_option_id);
 > CREATE INDEX idx_product_option_status ON PRODUCT_OPTION(status);
-> CREATE INDEX idx_cart ON CART02(cart_id);
-> CREATE INDEX idx_order_sheet ON ORDER_SHEET(order_sheet_id);
-> CREATE INDEX idx_order_sheet_item ON ORDER_SHEET_ITEM(order_sheet_item_id);
-> CREATE INDEX idx_order ON "order"(order_id);
 > CREATE INDEX idx_order_status ON "order"(status);
 > CREATE INDEX idx_order_updated_at ON "order"(updated_at);
-> CREATE INDEX idx_order_item ON ORDER_ITEM(order_item_id);
 > CREATE INDEX idx_order_item_status ON ORDER_ITEM(status);
-> CREATE INDEX idx_payment ON PAYMENT(payment_id);
 > CREATE INDEX idx_payment_status ON PAYMENT(status);
 > ```
 
-> Index 복합 이해 및 적용(개선) 후
+> 복합 Index 이해 및 적용(개선) 후
 > ````
-> CREATE INDEX idx_balance ON BALANCE(balance_id);
-> CREATE INDEX idx_product ON PRODUCT(product_id);
 > CREATE INDEX idx_product_status ON PRODUCT(status);
-> CREATE INDEX idx_product_option ON PRODUCT_OPTION(product_option_id);
 > CREATE INDEX idx_product_option_status ON PRODUCT_OPTION(status);
-> CREATE INDEX idx_cart ON CART02(cart_id);
-> CREATE INDEX idx_order_sheet ON ORDER_SHEET(order_sheet_id);
-> CREATE INDEX idx_order_sheet_item ON ORDER_SHEET_ITEM(order_sheet_item_id);
 > CREATE INDEX idx_order_status ON "order"(order_id, status);
 > CREATE INDEX idx_order_updated_at ON "order"(updated_at);
-> CREATE INDEX idx_order_item ON ORDER_ITEM(order_item_id);
 > CREATE INDEX idx_order_item_status ON ORDER_ITEM(status);
 > CREATE INDEX idx_payment_status ON PAYMENT(payment_id, status);
 > ````
 
+> 인덱스 통해서 Query 개선
+> - 인기 상품 조회
+> ```
+> // 기존
+> @Query(value = "SELECT od.product " +
+>       "FROM OrderDetail od" +
+>       "JOIN od.order o" +
+>       "WHERE o.createdAt BETWEEN :startDate AND :endDate " +
+>       "GROUP BY od.pid" +
+>       "ORDER BY SUM(od.totalCnt) DESC", nativeQuery = true)
+> List<Product> findTopSoldProduct(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+> 
+> // 개선(수정)
+> @Query(value = "SELECT od.product " +
+>       "FROM OrderDetail od" +
+>       "JOIN od.order o" +
+>       "WHERE o.createdAt BETWEEN :startDate AND :endDate " +
+>       "AND o.status = 1" +
+>       "GROUP BY od.pid" +
+>       "ORDER BY SUM(od.totalCnt) DESC", nativeQuery = true)
+> List<Product> findTopSoldProduct(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+> ```
+> 
+> - 주문(Order) 조회
+> ```
+> // 기존
+> Optional<Order> findById(Long orderId);
+> 
+> // 개선(추가)
+> @Query("SELECT o FROM Order o WHERE o.orderId = :orderId AND o.status = :status")
+> Optional<Order> findByOrderIdAndStatus(Long orderId, OrderStatus status);
+> ```
+> 
+> - 결제(Payment) 조회
+> 
+> ```agsl
+> // 기존
+> Optional<Payment> findById(Long paymentId);
+>
+> // 개선(추가)
+> @Query("SELECT p FROM Payment p WHERE p.paymentId = :paymentId AND p.status = :status")
+> Optional<Payment> findByPaymentIdAndStatus(@Param("paymentId") Long paymentId, @Param("status") PaymentStatus status);
+> ```
 
-
-> show explain
-> and before and after query
-> 인기상품 
+> EXPLAIN 결과
+> - 단일 인덱스
+> ![index02.png](img/explain_sql/index02.png)
+> 
+> - 복합 인덱스 포함
+> ![index03.png](img/explain_sql/index03.png)
 
 > 결론(단일 인덱스 vs 복합 인덱스)
 > - 현재 주문처리 할때 주문서(order)와 결제서(payment) 데이터 생성하고 상태 업데이트 처리하므로 상태 업데이트 전에 입금완료 상태 전에 입금대기 상태인것을 조회하는 것으로 개선이 된다고 판단됩니다. 
 > - 조회주문 조회 및 인기 상품 조회 같은 경우 주문 입금완료(status)와 입금일(updated_at) 기준으로 수집하므로 복합 인덱스로 적용하는게 적절하다고 판단이 됩니다.
-> - 잔액 조회 
+> - 잔액 조회 같은 경우 balance_id PK 
 > - product & product_option, order_sheet & order_sheet_item, order & order_item 데이터 조회를 SQL JOINS 로 변경하면 
 > product_option, order_sheet_item, order_item 복합 인덱스를 변경 할 것 같습니다.
 >   - ````
