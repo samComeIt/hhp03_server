@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -28,6 +29,16 @@ public class Outbox {
 
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
+
+    @Builder
+    public Outbox(Long outboxId, String id, OutboxType type, String message, OutboxStatus status, LocalDateTime createdAt) {
+        this.outboxId = outboxId;
+        this.id = id;
+        this.type = type;
+        this.message = message;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
 
     public Outbox(String id, OutboxType type, String message, OutboxStatus status, LocalDateTime createdAt) {
         this.id = id;
