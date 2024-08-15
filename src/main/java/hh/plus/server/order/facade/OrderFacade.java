@@ -4,9 +4,11 @@ import hh.plus.server.balance.service.BalanceService;
 import hh.plus.server.balance.service.dto.BalanceResponseDto;
 import hh.plus.server.cart.service.CartService;
 import hh.plus.server.common.exception.CustomException;
+import hh.plus.server.common.service.KafkaProducerService;
 import hh.plus.server.order.domain.OrderStatus;
 import hh.plus.server.order.domain.entity.Order;
 import hh.plus.server.order.domain.entity.OrderItem;
+import hh.plus.server.order.domain.listener.OrderCreatedEvent;
 import hh.plus.server.order.domain.repository.OrderRepository;
 import hh.plus.server.order.service.OrderService;
 import hh.plus.server.order.service.dto.request.OrderCreateRequestDto;
@@ -19,6 +21,7 @@ import hh.plus.server.product.domain.entity.ProductOption;
 import hh.plus.server.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +38,9 @@ public class OrderFacade {
     private final CartService cartService;
     private final OrderRepository orderRepository;
     private final PaymentRepository paymentRepository;
+    private ApplicationEventPublisher eventPublisher;
 
+    @Transactional(rollbackFor = Exception.class)
     public Order createOrder(OrderCreateRequestDto orderCreateRequestDto) {
         BalanceResponseDto balance = balanceService.getBalanceByBalanceId(orderCreateRequestDto.balanceId());
         Long totalPrice = calculateTotalPrice(orderCreateRequestDto);
@@ -51,6 +56,7 @@ public class OrderFacade {
         processPayment(orderCreateRequestDto, order, payment, totalPrice, balance);
         deleteCartItem(orderCreateRequestDto);
 
+        eventPublisher.publishEvent(new OrderCreatedEvent(order.getOrderId()));
         return order;
     }
 
