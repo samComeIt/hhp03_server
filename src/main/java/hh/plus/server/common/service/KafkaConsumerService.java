@@ -1,21 +1,21 @@
 package hh.plus.server.common.service;
 
-import hh.plus.server.outbox.domain.entity.Outbox;
-import hh.plus.server.outbox.domain.repository.OutboxRepository;
-import lombok.NoArgsConstructor;
+import hh.plus.server.outbox.service.OutboxService;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 @Service
 public class KafkaConsumerService {
-    private OutboxRepository outboxRepository;
+    private OutboxService outboxService;
 
     @KafkaListener(topics = "my-topic", groupId = "ecommerce-group")
-    public void listen(String message) {
-        updateOutboxStatus(message);
+    public void listen(ConsumerRecord<String, String> record) {
+        updateOutboxStatus(Long.parseLong(record.value()));
     }
 
-    public void updateOutboxStatus(String message) {
-        //Outbox outbox = outboxRepo
+    public void updateOutboxStatus(Long outboxId) {
+        outboxService.update(outboxId);
+        return;
     }
 }
