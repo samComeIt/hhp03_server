@@ -1,21 +1,21 @@
-title 상품 상세 조회 API
+title Get Product Detail API
 
 
-Actor->GET /api/product/{product_id}/detail/{option_id}: 상품 상세 정보 조회
-GET /api/product/{product_id}/detail/{option_id}<->Product: 상품 정보 요청
+Actor->GET /api/product/{product_id}/detail/{option_id}: Get product detail
+GET /api/product/{product_id}/detail/{option_id}<->Product: Request product data
 
-opt case 상품 존재X
-Product-->Actor: 끝
+opt case Product does not exist
+Product-->Actor: end
 end
 
-GET /api/product/{product_id}/detail/{option_id}->Product Detail->Product:상품 조회
-Product->Product Detail: 상품 상세 정보 요청
+GET /api/product/{product_id}/detail/{option_id}->Product Detail->Product:Get Product
+Product->Product Detail: Request product option data
 
-Product Detail<->Product Detail: 상품 상세 정보 조회
+Product Detail<->Product Detail: Get product option data
 
 
-alt case 상품 상세 정보 존재
-Product Detail-->Actor: 상품 상세 정보 반환
-else case 상품 상세 정보 존재X
-Product Detail-->Actor: 끝
+alt case Product Option exist
+Product Detail-->Actor: Return product option data
+else case Product Option does not exist
+Product Detail-->Actor: end
 end

@@ -1,26 +1,26 @@
-title 주문 결제
+title Order Payment
 
-Actor->Order: 주문정보 요청
+Actor->Order: Request order information
 
-Order->Order: 주문 생성
+Order->Order: Create order
 
 
 
-Order<->Product:재고 수량 확인
+Order<->Product:Check stock
 
-opt case 재고 부족
-Product-->Actor: 끝
+opt case Out of stock
+Product-->Actor: end
 end
 
-Product->Product: 재고 수량 차감
-Product->Product: 총 구매량 업데이트
+Product->Product: Deduct inventory quantity
+Product->Product: Update total purchases
 
-Product->Order: 주문 정보 생성
-Order->Payment: 결제 요청
+Product->Order: Create order detail
+Order->Payment: Payment request
 
-Payment-->Order: 결제 정보 반환
+Payment-->Order: Return payment information
 
-Order-->Actor: 주문 정보 반환
+Order-->Actor: Return Order Information
 
 
 end

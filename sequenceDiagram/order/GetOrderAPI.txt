@@ -1,15 +1,15 @@
-title 주문 조회 API
+title Get Order API
 
-Actor->GET /api/order/{order_id}: 주문 조회
-GET /api/order/{order_id}->Order: 주문 조회 요청
+Actor->GET /api/order/{order_id}: Get Order
+GET /api/order/{order_id}->Order: Order inquiry request
 
-Order<->Order: 주문 아이디 존재 확인
-alt case 주문아이디X:
-Order-->Actor:끝
-else case 주문아이디 존재:
-alt case 주문 정보 존재:
-Order-->Actor:주문 정보 반환
-else case 주문 정보 존재X:
+Order<->Order: Check existence of order ID
+alt case Order ID does not exist:
+Order-->Actor:end
+else case Order ID exist:
+alt case Order exist:
+Order-->Actor:Return Order Information
+else case Order does not exist:
 Order-->Actor: []
 end
 end

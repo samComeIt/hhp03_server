@@ -1,21 +1,21 @@
-title 주문 API
+title Order API
 
-Actor->POST /api/order/create: 주문 요청
-POST /api/order/create->Order: 주문정보 요청
+Actor->POST /api/order/create: Request Order
+POST /api/order/create->Order: Request Order Informatin
 
-Order->Order: 주문 생성
+Order->Order: Create Order
 
 
 
-Order<->Product:재고 수량 확인
+Order<->Product:Check current stock
 
-opt case 재고 부족
-Product-->Actor: 끝
+opt case Out of stock
+Product-->Actor: end
 end
 
-Product->Product: 재고 수량 차감
-Product->Product: 총 구매량 업데이트
+Product->Product: Deduct inventory quantity
+Product->Product: Update total purchases
 
 
-Product-->Actor: 주문 정보 반환
+Product-->Actor: Return Order Information
 end

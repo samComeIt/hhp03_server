@@ -1,37 +1,37 @@
-title 주문 결제 API
+title Order Payment API
 
-Actor->POST /api/order/create: 주문 요청
-POST /api/order/create->Order: 주문정보 요청
+Actor->POST /api/order/create: Request Order
+POST /api/order/create->Order: Request Order Information
 
-Order->Order: 주문 생성
-
-
-Order<->Balance: 잔액 생성
+Order->Order: Create Order
 
 
-alt case 잔액 존재X
-Balance-->Actor:끝
-else case 잔액 부족
-Balance-->Actor:끝
-else case 잔액 충분
+Order<->Balance: Create Balance
 
-Order<->Product:제품정보 요청
-alt case 제품정보 존재X
-Product-->Actor:끝
-else case 제품정보 수량X
-Product-->Actor:끝
+
+alt case Balance does not exist
+Balance-->Actor:end
+else case Balance is insufficient
+Balance-->Actor:end
+else case Update Balance
+
+Order<->Product:Request product information
+alt case Product does not exist
+Product-->Actor:end
+else case Out of stock
+Product-->Actor:end
 end
 
-Order<->Product:재고 수량 확인
+Order<->Product:Check current stock
 
-opt case 재고 부족
-Product-->Actor: 끝
+opt case Out of stock
+Product-->Actor: end
 end
 
-Product->Product: 재고 수량 차감
-Product->Product: 총 구매량 업데이트
-Order->Order: 주문 상태 업데이트
-Order->Order: 현재 잔액 업데이트
+Product->Product: Deduct inventory quantity
+Product->Product: Update total purchases
+Order->Order: Update order status
+Order->Order: Update current balance
 
-Order-->Actor: 주문 정보 반환
+Order-->Actor: Return order information
 end
