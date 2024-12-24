@@ -1,0 +1,26 @@
+title Order Payment
+
+Actor->Order: Request order information
+
+Order->Order: Create order
+
+
+
+Order<->Product:Check stock
+
+opt case Out of stock
+Product-->Actor: end
+end
+
+Product->Product: Deduct inventory quantity
+Product->Product: Update total purchases
+
+Product->Order: Create order detail
+Order->Payment: Payment request
+
+Payment-->Order: Return payment information
+
+Order-->Actor: Return Order Information
+
+
+end

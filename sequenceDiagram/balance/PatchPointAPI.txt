@@ -1,15 +1,15 @@
-title 잔액 충전 API
+title Update Balance API
 
-Actor->PATCH /api/balance/{balance_id}:잔액 충전 요청
-PATCH /api/balance/{balance_id}->Balance:잔액 조회 요청
+Actor->PATCH /api/balance/{balance_id}:Request balance update
+PATCH /api/balance/{balance_id}->Balance:Request current balance data
 
 
-alt case 잔액 데이터X
+alt case Balance data does not exist
 Balance<->Balance:0
-else case 잔액 데이터 존재
-Balance<->Balance: 현재 잔액 반환
+else case Balance data exist
+Balance<->Balance: Return current balance
 end
 
-Balance<->Balance: 잔액 충전 처리
+Balance<->Balance: Balance update
 
-Balance-->Actor: 업데이트된 잔액 반환
+Balance-->Actor: Return updated balance

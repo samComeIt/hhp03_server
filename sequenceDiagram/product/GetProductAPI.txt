@@ -1,11 +1,11 @@
-title 상품 조회 API
+title Get Product API
 
-Actor->GET /api/product/{product_id}: 상품 정보 조회
-GET /api/product/{product_id}->Product: 상품 정보 요청
-Product<->Product:상품 정보 조회
+Actor->GET /api/product/{product_id}: Get product information
+GET /api/product/{product_id}->Product: Request product information
+Product<->Product:Get product
 
-alt case 상품 정보 존재
-Product-->Actor:상품 정보 반환
-else case 상품 정보 존재X
+alt case Product exist
+Product-->Actor:Return product data
+else case Product does not exist
 Product-->Actor:[]
 end

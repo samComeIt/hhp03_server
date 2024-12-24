@@ -1,11 +1,11 @@
-title 잔액 조회 API
+title Get Balance API
 
-Actor->Get /api/balance/{balance_id}:현재 잔액 조회
-Get /api/balance/{balance_id}->Balance:현재 잔액 정보 요청
-Balance<->Balance: 현재 잔액 조회
+Actor->Get /api/balance/{balance_id}:Get current balance
+Get /api/balance/{balance_id}->Balance:Request current balance data
+Balance<->Balance: Get current balance
 
-alt case 잔액 데이터가 존재하지 않으면
+alt case Balance data does not exist
 Balance-->Actor:0
-else case 잔액 데이터 존재
-Balance-->Actor: 현재 잔액 반환
+else case Balance data exist
+Balance-->Actor: Return current balance
 end

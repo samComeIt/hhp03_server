@@ -1,0 +1,21 @@
+title Order API
+
+Actor->POST /api/order/create: Request Order
+POST /api/order/create->Order: Request Order Informatin
+
+Order->Order: Create Order
+
+
+
+Order<->Product:Check current stock
+
+opt case Out of stock
+Product-->Actor: end
+end
+
+Product->Product: Deduct inventory quantity
+Product->Product: Update total purchases
+
+
+Product-->Actor: Return Order Information
+end
