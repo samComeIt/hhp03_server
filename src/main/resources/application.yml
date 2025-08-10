@@ -1,6 +1,6 @@
 logging:
   slack:
-    webhook-uri: https://hooks.slack.com/services/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
+    webhook-uri: https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
   config: classpath:logback-slack.xml
   level:
     org.springframework.data.redis: DEBUG
